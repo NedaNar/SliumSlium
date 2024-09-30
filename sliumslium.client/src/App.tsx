@@ -1,24 +1,12 @@
-import {
-    useEffect
-} from 'react';
-import './App.css';
+import "./App.css";
+import HomePage from "./pages/HomePage";
 
 function App() {
-    useEffect(() => {
-        logShopData();
-    }, []);
-
-    return (
-        <div>Labukas
-        </div>
-    );
-
-    async function logShopData() {
-        // API EXAMPLE
-        const response = await fetch('https://localhost:7091/api/Items');
-        const data = await response.json();
-        console.log('JSON Data:', data);
-    }
+  return (
+    <div>
+      <HomePage></HomePage>
+    </div>
+  );
 }
 
 export default App;
