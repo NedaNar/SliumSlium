@@ -89,3 +89,10 @@ VALUES
     ('Data Analysis Task', 'Complete a data analysis task using provided data.', 1, 3),
     ('Phone Interview', 'Phone interview with the data science team.', 0, 3),
     ('Final Interview', 'On-site interview with the senior management.', 0, 3);
+
+INSERT INTO UserJobOffer (status, applicationDate, currentPart, fk_JobOfferid_JobOffer, fk_Userid_User)
+VALUES 
+    ('Submitted', '2024-10-10', 1, 1, 1),
+    ('In Progress', '2024-10-05', 2, 2, 2),
+    ('Denied', '2024-09-30', 4, 1, 1),
+    ('Accepted', '2024-10-01', 1, 3, 3);

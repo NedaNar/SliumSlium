@@ -55,5 +55,27 @@ namespace SliumSlium.Server.Controllers
 
             return Ok(jobOffer.Parts);
         }
+
+        [HttpGet("locations")]
+        public async Task<ActionResult<IEnumerable<string>>> GetAllLocations()
+        {
+            var locations = await _context.JobOffer
+                .Select(j => j.Location)
+                .Distinct()
+                .ToListAsync();
+
+            return Ok(locations);
+        }
+
+        [HttpGet("companies")]
+        public async Task<ActionResult<IEnumerable<string>>> GetAllCompanies()
+        {
+            var companies = await _context.JobOffer
+                .Select(j => j.CompanyName)
+                .Distinct()
+                .ToListAsync();
+
+            return Ok(companies);
+        }
     }
 }

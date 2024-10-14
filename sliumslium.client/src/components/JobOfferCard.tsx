@@ -1,62 +1,83 @@
 import { JobOffer } from "../api/apiModel";
+import { getExperience, getPartTime, getRemote } from "../utils/enumUtils";
+import { useNavigate } from "react-router-dom";
+import "./jobOfferCard.css";
+import { useAppliedOffers } from "../context/AppliedOffersContext";
 
 interface JobOfferProps {
   offer: JobOffer;
 }
 
 export default function JobOfferCard({ offer }: JobOfferProps) {
-  const experienceLevels = ["Entry Level", "Mid Level", "Senior Level"];
-  const progressBarWidth = (offer.experienceLevel + 1) * 50;
+  const navigate = useNavigate();
+  const { appliedOfferIds } = useAppliedOffers();
+
+  const handleCardClick = () => {
+    navigate(`/job-offer/${offer.id_JobOffer}`, {
+      state: { offer },
+    });
+  };
 
   return (
-    <div className="card mb-4">
-      <div className="card-body">
-        <div className="row">
-          <div className="col">
-            <h5 className="card-title">
-              <i className="fas fa-briefcase"></i> {offer.name}
-            </h5>
-            <h6 className="card-subtitle mb-2 text-muted">
-              {offer.companyName}
-            </h6>
+    <div className="card job-offer-card" onClick={handleCardClick}>
+      <div className="row valign-wrapper" style={{ padding: "0.5rem 2rem" }}>
+        <div className="col s7">
+          <h5 className="card-title">
+            {offer.name}{" "}
+            {appliedOfferIds.has(offer.id_JobOffer) && (
+              <span
+                style={{
+                  backgroundColor: "#b2d8d8",
+                  fontSize: "1rem",
+                  padding: "0.2rem 0.6rem",
+                  borderRadius: "4px",
+                  color: "#004c4c ",
+                  marginLeft: "1rem",
+                }}
+              >
+                Applied
+              </span>
+            )}
+          </h5>
+          <h6 className="card-subtitle">{offer.companyName}</h6>
+        </div>
+
+        <div
+          className="col s3 indigo lighten-5 right"
+          style={{
+            padding: "1rem 1.5rem",
+            borderRadius: "4px",
+          }}
+        >
+          <p style={{ fontSize: "1.1rem", margin: "0" }}>
+            From <strong>{offer.salary} €</strong>/month
+          </p>
+        </div>
+
+        <div className="col s3 right" style={{ padding: "0 0 0 2rem" }}>
+          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
+            <i className="tiny material-icons">place</i>
+            <strong>&nbsp;&nbsp;Location:&nbsp;</strong>
+            {offer.location}
           </div>
-          <div className="col">
-            <p className="card-text">
-              <strong>
-                <i className="fas fa-dollar-sign"></i> Salary:
-              </strong>{" "}
-              ${offer.salary}
-            </p>
-            <p className="card-text">
-              <strong>
-                <i className="fas fa-map-marker-alt"></i> Location:
-              </strong>{" "}
-              {offer.location}
-            </p>
-            <p className="card-text">
-              <strong>
-                <i className="fas fa-star"></i> Experience Level:
-              </strong>
-              <div className="progress">
-                <div
-                  className={`progress-bar ${
-                    progressBarWidth === 100
-                      ? "bg-success"
-                      : progressBarWidth >= 50
-                      ? "bg-warning"
-                      : "bg-danger"
-                  }`}
-                  role="progressbar"
-                  style={{ width: `${progressBarWidth}%` }}
-                  aria-valuenow={offer.experienceLevel}
-                  aria-valuemin={1}
-                  aria-valuemax={2}
-                ></div>
-              </div>
-              <span>{experienceLevels[offer.experienceLevel]}</span>
-            </p>
+          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
+            <i className="tiny material-icons">show_chart</i>
+            <strong>&nbsp;&nbsp;Experience:&nbsp;</strong>
+            {getExperience(offer.experienceLevel)}
+          </div>
+          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
+            <i className="tiny material-icons">apartment</i>
+            <strong>&nbsp;&nbsp;Remote:&nbsp;</strong>
+            {getRemote(offer.workEnvironment)}
+          </div>
+          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
+            <i className="tiny material-icons">schedule</i>
+            <strong>&nbsp;&nbsp;Part Time:&nbsp;</strong>
+            {getPartTime(offer.partTime)}
           </div>
         </div>
+
+        <i className="material-icons arrow-icon">chevron_right</i>
       </div>
     </div>
   );
