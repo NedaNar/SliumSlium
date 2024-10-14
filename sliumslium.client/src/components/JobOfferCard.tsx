@@ -3,12 +3,26 @@ import { getExperience, getPartTime, getRemote } from "../utils/enumUtils";
 import { useNavigate } from "react-router-dom";
 import "./jobOfferCard.css";
 import { useAppliedOffers } from "../context/AppliedOffersContext";
+import { useEffect, useState } from "react";
 
 interface JobOfferProps {
   offer: JobOffer;
 }
 
 export default function JobOfferCard({ offer }: JobOfferProps) {
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 900);
+
+  const handleResize = () => {
+    setIsSmallScreen(window.innerWidth < 900);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const navigate = useNavigate();
   const { appliedOfferIds } = useAppliedOffers();
 
@@ -20,8 +34,11 @@ export default function JobOfferCard({ offer }: JobOfferProps) {
 
   return (
     <div className="card job-offer-card" onClick={handleCardClick}>
-      <div className="row valign-wrapper" style={{ padding: "0.5rem 2rem" }}>
-        <div className="col s7">
+      <div
+        className={`row ${isSmallScreen ? "" : "valign-wrapper"}`}
+        style={{ padding: "0.5rem 2rem" }}
+      >
+        <div className={`${isSmallScreen ? "row" : "col s6"}`}>
           <h5 className="card-title">
             {offer.name}{" "}
             {appliedOfferIds.has(offer.id_JobOffer) && (
@@ -43,10 +60,14 @@ export default function JobOfferCard({ offer }: JobOfferProps) {
         </div>
 
         <div
-          className="col s3 indigo lighten-5 right"
+          className={`indigo lighten-5 ${
+            isSmallScreen ? "row" : "col s3 right"
+          }`}
           style={{
             padding: "1rem 1.5rem",
             borderRadius: "4px",
+            maxWidth: "300px",
+            margin: isSmallScreen ? "0 auto 1rem 0" : "0",
           }}
         >
           <p style={{ fontSize: "1.1rem", margin: "0" }}>
@@ -54,7 +75,10 @@ export default function JobOfferCard({ offer }: JobOfferProps) {
           </p>
         </div>
 
-        <div className="col s3 right" style={{ padding: "0 0 0 2rem" }}>
+        <div
+          className={`${isSmallScreen ? "row" : "col s3 right"}`}
+          style={{ padding: "0 0 0 2rem" }}
+        >
           <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
             <i className="tiny material-icons">place</i>
             <strong>&nbsp;&nbsp;Location:&nbsp;</strong>

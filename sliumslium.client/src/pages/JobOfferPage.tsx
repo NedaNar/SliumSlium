@@ -33,7 +33,7 @@ export default function JobOfferPage() {
       {offer && (
         <div className="container" style={{ marginTop: "2rem" }}>
           <div className="row">
-            <div className="col s12 m8">
+            <div className="col s12 m6 l7">
               <h4>{offer.name}</h4>
               <p>{offer.companyName}</p>
               <p style={{ margin: "0 2rem 0 0" }}>{offer.description}</p>
@@ -47,7 +47,7 @@ export default function JobOfferPage() {
               )}
             </div>
 
-            <div className="col s12 m4">
+            <div className="col s12 m6 l5">
               <div
                 className="card"
                 style={{ padding: "1rem 2rem", marginTop: "2rem" }}
