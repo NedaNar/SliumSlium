@@ -12,3 +12,21 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background: #fff;
 }
+
+.pagination li a {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  text-decoration: none;
+  color: #333;
+}
+
+.pagination li.disabled a {
+  color: #ccc;
+  pointer-events: none;
+}
+
+.pagination li.active a {
+  background-color: #1976d2;
+  color: white;
+}
