@@ -15,6 +15,57 @@ namespace SliumSlium.Server.Controllers
             _context = context;
         }
 
+        [HttpGet("Query")]
+        public async Task<ActionResult<IEnumerable<JobOffer>>> GetJobOffers([FromQuery] string? Name, [FromQuery] string? Location, [FromQuery] string? CompanyName,
+            [FromQuery] int? ExperienceLevel, [FromQuery] int? WorkEnvironment, [FromQuery] bool? PartTime)
+        {
+            var query = _context.JobOffer.AsQueryable();
+
+            try
+            {
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    query = query.Where(j => j.Name.ToLower().Contains(Name.ToLower()));
+                }
+
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    query = query.Where(j => j.Description.ToLower().Contains(Name.ToLower()));
+                }
+
+                if (!string.IsNullOrEmpty(Location))
+                {
+                    query = query.Where(j => j.Location.ToLower().Contains(Location.ToLower()));
+                }
+
+                if (!string.IsNullOrEmpty(CompanyName))
+                {
+                    query = query.Where(j => j.CompanyName.ToLower().Contains(CompanyName.ToLower()));
+                }
+
+                if (ExperienceLevel.HasValue)
+                {
+                    query = query.Where(j => j.ExperienceLevel == ExperienceLevel.Value);
+                }
+
+                if (WorkEnvironment.HasValue)
+                {
+                    query = query.Where(j => j.WorkEnvironment == WorkEnvironment.Value);
+                }
+
+                if (PartTime.HasValue)
+                {
+                    query = query.Where(j => j.PartTime == PartTime.Value);
+                }
+
+                return await query.ToListAsync();
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, new { error = exception.Message });
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobOffer>>> GetJobOffers()
         {

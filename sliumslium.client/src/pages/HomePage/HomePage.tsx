@@ -2,9 +2,11 @@ import { JobOffer } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
 import Filters from "./Filters";
 import JobOfferCard from "../../components/JobOfferCard";
+import { useState } from "react";
 
 export default function HomePage() {
   const { data } = useFetch<JobOffer[]>("JobOffer");
+  const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
 
   return (
     <>
@@ -13,14 +15,22 @@ export default function HomePage() {
           Job Offers
         </h1>
         <Filters
-          onFilterChange={function (filters: any): void {
-            throw new Error("Function not implemented.");
-          }}
+          onFilterChange={(filteredData) => setJobOffers(filteredData)}
         />
-        {data &&
-          data.map((offer, index) => (
-            <JobOfferCard key={index} offer={offer} />
-          ))}
+        <div className="job-offers-list" style={{ marginTop: "2rem" }}>
+          {jobOffers.length > 0 ? (
+            jobOffers.map((offer) => (
+              <JobOfferCard key={offer.id_JobOffer} offer={offer} />
+            ))
+          ) : (
+            <>
+              {data &&
+                data.map((offer, index) => (
+                  <JobOfferCard key={index} offer={offer} />
+                ))}
+            </>
+          )}
+        </div>
       </div>
     </>
   );

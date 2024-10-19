@@ -27,13 +27,49 @@ export default function Filters({ onFilterChange }: FiltersProps) {
 
   const handleApplyFilters = () => {
     const filters = {
-      nameDescription,
-      location,
-      experience,
-      partTime,
-      workEnvironment,
+      Name: nameDescription || "",
+      Location: location || "",
+      CompanyName: company || "",
+      ExperienceLevel: experience || "",
+      WorkEnvironment: workEnvironment || "",
+      PartTime: partTime || "",
     };
-    //onFilterChange(filters);
+
+    const queryParams = new URLSearchParams(filters as any).toString();
+
+    if (queryParams) {
+      fetch(`https://localhost:7091/api/JobOffer/Query?${queryParams}`)
+        .then(async (response) => {
+          if (!response.ok) {
+            M.toast({
+              html: `API returned error: ${response.status} ${response.statusText}`,
+              classes: "red",
+            });
+          }
+          return response.text();
+        })
+        .then((data) => {
+          try {
+            const jsonData = JSON.parse(data);
+
+            const fetchedLength = Array.isArray(jsonData) ? jsonData.length : 0;
+
+            if (fetchedLength === 0) {
+              M.toast({
+                html: "No job offers found. Try adjusting the filters.",
+                classes: "red",
+              });
+            }
+            onFilterChange(jsonData);
+          } catch (error) {}
+        })
+        .catch((error) => {
+          M.toast({
+            html: `Error fetching job offers: ${error}`,
+            classes: "red",
+          });
+        });
+    }
   };
 
   const handleClearFilters = () => {
