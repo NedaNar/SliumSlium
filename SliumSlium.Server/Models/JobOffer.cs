@@ -21,6 +21,6 @@ namespace SliumSlium.Server.Models
         public User User { get; set; }
 
         [JsonIgnore]
-        public ICollection<Part> Parts { get; set; }
+        public ICollection<Part> Parts { get; set; } = new List<Part>();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SliumSlium.Server.Models
+﻿using System.Collections;
+
+namespace SliumSlium.Server.Models
 {
     public class User
     {
@@ -8,6 +10,6 @@
         public string Password { get; set; }
         public int Type { get; set; }
 
-        public ICollection<JobOffer> JobOffers { get; set; }
+        public ICollection<JobOffer> JobOffers { get; set; } = new List<JobOffer>();
     }
 }

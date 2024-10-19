@@ -30,21 +30,20 @@ public class DatabaseContext : DbContext
             .HasForeignKey(j => j.Fk_UserId_User);
 
         modelBuilder.Entity<Part>()
-            .HasOne(p => p.JobOffers)
+            .HasOne(p => p.JobOffer)
             .WithMany(j => j.Parts)
             .HasForeignKey(p => p.Fk_JobOfferId_JobOffer);
-        ////
         modelBuilder.Entity<UserJobOffer>()
             .HasKey(uj => uj.Id_UserJobOffer);
 
         modelBuilder.Entity<UserJobOffer>()
-            .HasOne(uj => uj.JobOffer)  // Link UserJobOffer to JobOffer
-            .WithMany()                  // No navigation property from JobOffer to UserJobOffer
+            .HasOne(uj => uj.JobOffer) 
+            .WithMany()
             .HasForeignKey(uj => uj.Fk_JobOfferid_JobOffer);
 
         modelBuilder.Entity<UserJobOffer>()
-            .HasOne(uj => uj.User)      // Link UserJobOffer to User
-            .WithMany()                  // No navigation property from User to UserJobOffer
+            .HasOne(uj => uj.User)
+            .WithMany()
             .HasForeignKey(uj => uj.Fk_Userid_User);
     }
 }
