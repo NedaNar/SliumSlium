@@ -43,21 +43,21 @@ export default function Header() {
                 color: "#333",
                 alignContent: "center",
               }}
-              href="#jobs"
+              href="/"
             >
               Jobs
             </a>
           </li>
           <li>
             <a
-              href="#about"
+              href="/open-positions"
               style={{
                 height: "100px",
                 color: "#333",
                 alignContent: "center",
               }}
             >
-              About Us
+              Created positions
             </a>
           </li>
           <li>

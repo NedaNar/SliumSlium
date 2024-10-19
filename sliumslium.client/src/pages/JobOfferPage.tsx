@@ -6,6 +6,7 @@ import JobOfferPart from "../components/JobOfferPart";
 import { useAppliedOffers } from "../context/AppliedOffersContext";
 import { useEffect, useState } from "react";
 import { getBadgeBackground, getBadgeColor } from "../utils/colorUtils";
+import { StatusBadge } from "../components/StatusBadge";
 
 export default function JobOfferPage() {
   const location = useLocation();
@@ -95,20 +96,7 @@ export default function JobOfferPage() {
                 Applied on{" "}
                 {new Date(userJobOffer.applicationDate).toLocaleDateString()}
                 {userJobOffer && (
-                  <span
-                    style={{
-                      backgroundColor: getBadgeBackground(
-                        userJobOffer.status.trim()
-                      ),
-                      fontSize: "1rem",
-                      padding: "0.2rem 0.6rem",
-                      borderRadius: "4px",
-                      color: getBadgeColor(userJobOffer.status.trim()),
-                      marginLeft: "1rem",
-                    }}
-                  >
-                    Application {userJobOffer.status.toLowerCase()}
-                  </span>
+                  <StatusBadge status={userJobOffer.status.trim()} />
                 )}
               </p>
             )}

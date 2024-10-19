@@ -27,3 +27,11 @@ export interface UserJobOffer {
   fk_JobOfferid_JobOffer: number;
   fk_Userid_User: number;
 }
+
+export interface Applicant {
+  id: number;
+  name: string;
+  email: string;
+  date: string;
+  status: string;
+}

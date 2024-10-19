@@ -8,6 +8,8 @@ import { AppliedOffersProvider } from "./context/AppliedOffersContext";
 import Header from "./components/Header";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import OpenPositionsPage from "./pages/OpenPositions/OpenPositionsPage";
+import OpenPositionPage from "./pages/OpenPositions/OpenPositionPage";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/open-positions" element={<OpenPositionsPage />} />
+            <Route path="/job-position/:id" element={<OpenPositionPage />} />
             <Route path="/job-offer/:id" element={<JobOfferPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />

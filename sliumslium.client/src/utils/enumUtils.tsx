@@ -18,6 +18,13 @@ export const WORK_ENVIRONMENT_OPTIONS = [
   { value: 3, label: "On-site" },
 ];
 
+export const STATUS_OPTIONS = [
+  { value: "Submitted", label: "Submitted" },
+  { value: "In progress", label: "In progress" },
+  { value: "Accepted", label: "Accepted" },
+  { value: "Denied", label: "Denied" },
+];
+
 export const getExperience = (experience: number) => {
   switch (experience) {
     case 1:

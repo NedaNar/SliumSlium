@@ -1,15 +1,18 @@
 import { JobOffer } from "../api/apiModel";
 import { getExperience, getPartTime, getRemote } from "../utils/enumUtils";
-import { useNavigate } from "react-router-dom";
 import "./jobOfferCard.css";
 import { useAppliedOffers } from "../context/AppliedOffersContext";
 import { useEffect, useState } from "react";
 
 interface JobOfferProps {
   offer: JobOffer;
+  handleCardClick: () => void;
 }
 
-export default function JobOfferCard({ offer }: JobOfferProps) {
+export default function JobOfferCard({
+  offer,
+  handleCardClick,
+}: JobOfferProps) {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 900);
 
   const handleResize = () => {
@@ -23,14 +26,7 @@ export default function JobOfferCard({ offer }: JobOfferProps) {
     };
   }, []);
 
-  const navigate = useNavigate();
   const { appliedOfferIds } = useAppliedOffers();
-
-  const handleCardClick = () => {
-    navigate(`/job-offer/${offer.id_JobOffer}`, {
-      state: { offer },
-    });
-  };
 
   return (
     <div className="card job-offer-card" onClick={handleCardClick}>

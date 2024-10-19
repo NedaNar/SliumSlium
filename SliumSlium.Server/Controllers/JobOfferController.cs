@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SliumSlium.Server.DTO;
 using SliumSlium.Server.Models;
 
 namespace SliumSlium.Server.Controllers
@@ -91,6 +92,47 @@ namespace SliumSlium.Server.Controllers
             return Ok(jobOffer);
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<JobOffer>>> GetJobOffersByUserId(int userId)
+        {
+            var jobOffers = await _context.JobOffer
+                .Where(j => j.Fk_UserId_User == userId)
+                .Include(j => j.Parts)
+                .ToListAsync();
+
+            if (jobOffers == null || !jobOffers.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(jobOffers);
+        }
+
+        [HttpGet("{id}/applicants")]
+        public async Task<ActionResult<IEnumerable<User>>> GetApplicantsByJobOfferId(int id)
+        {
+            var applicants = await _context.UserJobOffer
+                .Where(ujo => ujo.Fk_JobOfferid_JobOffer == id)
+                .Include(ujo => ujo.User)
+                .OrderBy(ujo => ujo.ApplicationDate)
+                .Select(ujo => new UserDTO
+                {
+                    Id = ujo.Fk_Userid_User,
+                    Name = ujo.User.Name,
+                    Email = ujo.User.Email,
+                    Status = ujo.Status,
+                    Date = ujo.ApplicationDate.ToString()
+                })
+                .ToListAsync();
+
+            if (applicants == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(applicants);
+        }
+
 
         [HttpGet("{id}/parts")]
         public async Task<ActionResult<IEnumerable<Part>>> GetPartsByJobOfferId(int id)
@@ -107,7 +149,7 @@ namespace SliumSlium.Server.Controllers
             return Ok(jobOffer.Parts);
         }
 
-        [HttpGet("locations")]
+        /*[HttpGet("locations")]
         public async Task<ActionResult<IEnumerable<string>>> GetAllLocations()
         {
             var locations = await _context.JobOffer
@@ -127,6 +169,6 @@ namespace SliumSlium.Server.Controllers
                 .ToListAsync();
 
             return Ok(companies);
-        }
+        }*/
     }
 }
