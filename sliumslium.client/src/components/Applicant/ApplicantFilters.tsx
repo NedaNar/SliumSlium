@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import {
-  STATUS_OPTIONS,
-} from "../../utils/enumUtils";
+import { STATUS_OPTIONS } from "../../utils/enumUtils";
 import M from "materialize-css";
+import axios from "axios";
 
 interface ApplicantFiltersProps {
+  offerId: number;
   onFilterChange: (filters: any) => void;
 }
 
 export default function ApplicantFilters({
+  offerId,
   onFilterChange,
 }: ApplicantFiltersProps) {
   const [selectedName, setSelectedName] = useState("");
@@ -19,11 +20,43 @@ export default function ApplicantFilters({
     M.FormSelect.init(elems);
   }, []);
 
-  const handleApplyFilters = () => {};
+  const handleApplyFilters = async () => {
+    try {
+      const params = new URLSearchParams();
+      params.append("Name", selectedName);
 
-  const handleClearFilters = () => {
+      if (selectedStatuses && selectedStatuses.length > 0) {
+        selectedStatuses.forEach((status) => {
+          params.append("Statuses", status);
+        });
+      }
+
+      const queryString = new URLSearchParams(params).toString();
+      const response = await axios.get(
+        `https://localhost:7091/api/JobOffer/${offerId}/applicantsQuery?${queryString}`
+      );
+      onFilterChange(response.data);
+    } catch (error) {
+      M.toast({
+        html: "Error getting applicants",
+      });
+    }
+  };
+
+  const handleClearFilters = async () => {
     setSelectedName("");
     setSelectedStatuses([]);
+
+    try {
+      const response = await axios.get(
+        `https://localhost:7091/api/JobOffer/${offerId}/applicants`
+      );
+      onFilterChange(response.data);
+    } catch (error) {
+      M.toast({
+        html: "Error getting applicants",
+      });
+    }
 
     setTimeout(() => {
       const elems = document.querySelectorAll("select");

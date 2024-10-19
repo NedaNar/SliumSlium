@@ -20,7 +20,7 @@ export const WORK_ENVIRONMENT_OPTIONS = [
 
 export const STATUS_OPTIONS = [
   { value: "Submitted", label: "Submitted" },
-  { value: "In progress", label: "In progress" },
+  { value: "In Progress", label: "In Progress" },
   { value: "Accepted", label: "Accepted" },
   { value: "Denied", label: "Denied" },
 ];

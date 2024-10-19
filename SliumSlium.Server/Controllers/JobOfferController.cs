@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SliumSlium.Server.DTO;
 using SliumSlium.Server.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SliumSlium.Server.Controllers
 {
@@ -60,6 +61,52 @@ namespace SliumSlium.Server.Controllers
                 }
 
                 return await query.ToListAsync();
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, new { error = exception.Message });
+            }
+        }
+
+        [HttpGet("{id}/applicantsQuery")]
+        public async Task<ActionResult<IEnumerable<JobOffer>>> GetJobOffers(int id, [FromQuery] string? Name, [FromQuery] string[] Statuses)
+        {
+            var query = _context.UserJobOffer
+                .Where(ujo => ujo.Fk_JobOfferid_JobOffer == id)
+                .Include(ujo => ujo.User)
+                .Select(ujo => new UserDTO
+                {
+                    Id = ujo.Fk_Userid_User,
+                    Name = ujo.User.Name,
+                    Email = ujo.User.Email,
+                    Status = ujo.Status,
+                    Date = ujo.ApplicationDate.ToString()
+                });
+
+            try
+            {
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    query = query.Where(u => u.Name.ToLower().Contains(Name.ToLower()));
+                }
+
+                if (Statuses != null && Statuses.Length > 0)
+                {
+                    query = query.Where(u => Statuses.Contains(u.Status));
+                }
+
+                query = query.OrderBy(u => u.Date);
+
+                var applicants = await query.ToListAsync();
+
+                if (applicants == null)
+                {
+                    return NotFound();
+                }
+
+                Console.Write(applicants);
+
+                return Ok(applicants);
             }
             catch (Exception exception)
             {

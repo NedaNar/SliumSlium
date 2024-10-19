@@ -4,14 +4,24 @@ import useFetch from "../../api/useDataFetching";
 import { getExperience, getPartTime, getRemote } from "../../utils/enumUtils";
 import ApplicantCard from "../../components/Applicant/ApplicantCard";
 import ApplicantFilters from "../../components/Applicant/ApplicantFilters";
+import { useEffect, useState } from "react";
 
 export default function OpenPositionPage() {
   const location = useLocation();
   const offer = location.state?.offer;
+  const [applicants, setApplicants] = useState<Applicant[]>([]);
 
-  const { data: applicants } = useFetch<Applicant[]>(
+  const { data } = useFetch<Applicant[]>(
     `JobOffer/${offer.id_JobOffer}/applicants`
   );
+
+  const handleFilterChange = (data: Applicant[]) => {
+    setApplicants(data);
+  };
+
+  useEffect(() => {
+    if (data) setApplicants(data);
+  }, [data]);
 
   return (
     <>
@@ -76,15 +86,16 @@ export default function OpenPositionPage() {
               Applicants ({applicants?.length})
             </h5>
             <ApplicantFilters
-              onFilterChange={function (filters: any): void {
-                throw new Error("Function not implemented.");
-              }}
+              offerId={offer.id_JobOffer}
+              onFilterChange={handleFilterChange}
             />
             {applicants &&
               applicants.map((appl, index) => (
                 <ApplicantCard key={index} applicant={appl} />
               ))}
-            {!applicants && <h3>No applicants yet</h3>}
+            {(!applicants || applicants.length === 0) && (
+              <h5 className="center-align">No applicants found :(</h5>
+            )}
           </div>
         </div>
       )}
