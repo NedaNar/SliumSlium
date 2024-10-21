@@ -44,8 +44,6 @@ export default function JobOfferPart({
     setIsCollapsed((prev) => !prev);
   };
 
-  console.log(part.name);
-
   return (
     <ul className="collapsible" ref={collapsibleRef}>
       <li>

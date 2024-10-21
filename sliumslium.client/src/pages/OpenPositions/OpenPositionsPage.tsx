@@ -2,17 +2,20 @@ import { useNavigate } from "react-router";
 import { JobOffer } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
 import JobOfferCard from "../../components/JobOfferCard";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 export default function OpenPositionsPage() {
   const navigate = useNavigate();
-  const { data } = useFetch<JobOffer[]>("JobOffer/user/1");
+  const { user } = useContext(UserContext);
+  const { data } = useFetch<JobOffer[]>(`JobOffer/user/${user?.id_User}`);
 
   return (
     <>
       <div>
         <h1 style={{ textAlign: "center" }}>Created Positions</h1>
         <h6 style={{ textAlign: "center", marginBottom: "3rem" }}>
-          MY COMPANY
+          {user?.name}
         </h6>
         <button className="btn-large indigo" style={{ margin: "0 0 1rem" }}>
           <div className="valign-wrapper">

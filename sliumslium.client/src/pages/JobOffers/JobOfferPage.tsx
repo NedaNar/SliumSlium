@@ -1,24 +1,29 @@
 import { useLocation } from "react-router";
-import { getExperience, getPartTime, getRemote } from "../utils/enumUtils";
-import { JobPart, UserJobOffer } from "../api/apiModel";
-import useFetch from "../api/useDataFetching";
-import JobOfferPart from "../components/JobOfferPart";
-import { useAppliedOffers } from "../context/AppliedOffersContext";
-import { useEffect, useState } from "react";
-import { getBadgeBackground, getBadgeColor } from "../utils/colorUtils";
-import { StatusBadge } from "../components/StatusBadge";
+import { getExperience, getPartTime, getRemote } from "../../utils/enumUtils";
+import { JobPart, UserJobOffer } from "../../api/apiModel";
+import useFetch from "../../api/useDataFetching";
+import JobOfferPart from "../../components/JobOfferPart";
+import { useContext, useEffect, useState } from "react";
+import { StatusBadge } from "../../components/StatusBadge";
+import { UserContext } from "../../context/UserContext";
+import { format, isBefore } from "date-fns";
+import { LoginModal } from "../../components/Modals/LoginModal";
 
 export default function JobOfferPage() {
   const location = useLocation();
   const offer = location.state?.offer;
 
+  const { user } = useContext(UserContext);
   const [userJobOffer, setUserJobOffer] = useState<UserJobOffer | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: parts } = useFetch<JobPart[]>(
     `JobOffer/${offer.id_JobOffer}/parts`
   );
 
-  const { appliedOfferIds, appliedOffers } = useAppliedOffers();
+  const { data: appliedOffers } = useFetch<UserJobOffer[]>(
+    user ? `UserJobOffer/${user?.id_User}` : ""
+  );
 
   useEffect(() => {
     if (appliedOffers) {
@@ -29,8 +34,16 @@ export default function JobOfferPage() {
     }
   }, [appliedOffers]);
 
+  const handleApplyClick = () => {
+    if (!user) {
+      setIsModalOpen(true);
+    } else {
+    }
+  };
+
   return (
     <>
+      <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       {offer && (
         <div className="container" style={{ marginTop: "2rem" }}>
           <div className="row">
@@ -38,14 +51,20 @@ export default function JobOfferPage() {
               <h4>{offer.name}</h4>
               <p>{offer.companyName}</p>
               <p style={{ margin: "0 2rem 0 0" }}>{offer.description}</p>
-              {!appliedOfferIds.has(offer.id_JobOffer) && (
-                <button
-                  className="btn-large indigo lighten-1"
-                  style={{ margin: "2rem 0 0" }}
-                >
-                  Apply
-                </button>
-              )}
+              {user?.type !== 0 &&
+                (!appliedOffers ||
+                  !appliedOffers.some(
+                    (off) => off.fk_JobOfferid_JobOffer === offer.id_JobOffer
+                  )) && (
+                  <button
+                    className="btn-large indigo lighten-1"
+                    style={{ margin: "2rem 0 0" }}
+                    disabled={isBefore(offer.validDate, new Date())}
+                    onClick={handleApplyClick}
+                  >
+                    Apply
+                  </button>
+                )}
             </div>
 
             <div className="col s12 m6 l5">
@@ -90,16 +109,25 @@ export default function JobOfferPage() {
           </div>
 
           <div className="row">
-            <h5 style={{ margin: "4rem 0 0rem" }}>Application steps</h5>
-            {userJobOffer && (
-              <p>
-                Applied on{" "}
-                {new Date(userJobOffer.applicationDate).toLocaleDateString()}
-                {userJobOffer && (
-                  <StatusBadge status={userJobOffer.status.trim()} />
-                )}
-              </p>
-            )}
+            <h5 style={{ margin: "4rem 0 0rem" }}>
+              Application steps{" "}
+              {userJobOffer && (
+                <StatusBadge status={userJobOffer.status.trim()} />
+              )}
+            </h5>
+            <div style={{ margin: "1rem 0" }}>
+              {userJobOffer && (
+                <span>
+                  Applied: {format(userJobOffer.applicationDate, "yyyy MM dd")}{" "}
+                  |{" "}
+                </span>
+              )}
+              <span>
+                {isBefore(offer.validDate, new Date())
+                  ? "No longer accepting applications"
+                  : `Valid until: ${format(offer.validDate, "yyyy MM dd")}`}
+              </span>
+            </div>
             <div style={{ margin: "2rem 0 0rem" }}>
               {parts &&
                 parts.map((part, index) => {
@@ -112,7 +140,15 @@ export default function JobOfferPage() {
                       <JobOfferPart
                         key={index}
                         part={part}
-                        applied={appliedOfferIds.has(offer.id_JobOffer)}
+                        applied={
+                          appliedOffers
+                            ? appliedOffers.some(
+                                (off) =>
+                                  off.fk_JobOfferid_JobOffer ===
+                                  offer.id_JobOffer
+                              )
+                            : false
+                        }
                         isCurrent={isCurrentPart}
                       />
                     </>

@@ -13,6 +13,8 @@ function useFetch<T>(endpoint: string): FetchResult<T> {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!endpoint) return;
+
     const fetchData = async () => {
       setLoading(true);
       try {

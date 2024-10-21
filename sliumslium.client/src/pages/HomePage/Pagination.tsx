@@ -10,7 +10,7 @@ interface PaginationProps {
 export default function Pagination({ jobOffers }: PaginationProps) {
   const navigate = useNavigate();
 
-  const ITEMS_PER_PAGE = 1;
+  const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastBook = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstBook = indexOfLastBook - ITEMS_PER_PAGE;

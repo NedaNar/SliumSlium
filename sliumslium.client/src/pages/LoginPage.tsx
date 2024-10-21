@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
+import { UserContext } from "../context/UserContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    login(email, password);
+  };
 
   return (
     <div className="container center-align">
@@ -14,7 +21,7 @@ export default function LoginPage() {
           Log in
         </h4>
         <div>
-          <form onSubmit={() => {}}>
+          <form onSubmit={handleSubmit}>
             <div className="input-field" style={{ margin: "0 0 2rem" }}>
               <input
                 id="email"

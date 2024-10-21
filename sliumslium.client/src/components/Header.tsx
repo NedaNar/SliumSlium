@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router";
 
 export default function Header() {
-  useEffect(() => {
-    document.getElementById("loginBtn")!.onclick = function () {
-      location.href = "/login";
-    };
-  }, []);
+  const { user, logout } = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <nav
@@ -36,54 +35,86 @@ export default function Header() {
         </a>
 
         <ul className="right">
-          <li>
-            <a
+          {(!user || user.type === 1) && (
+            <li>
+              <a
+                style={{
+                  height: "100px",
+                  color: "#333",
+                  alignContent: "center",
+                }}
+                href="/"
+              >
+                Jobs
+              </a>
+            </li>
+          )}
+          {user?.type === 0 && (
+            <li>
+              <a
+                href="/"
+                style={{
+                  height: "100px",
+                  color: "#333",
+                  alignContent: "center",
+                }}
+              >
+                Created positions
+              </a>
+            </li>
+          )}
+          {user && (
+            <li>
+              <a
+                href="/"
+                style={{
+                  height: "100px",
+                  color: "#333",
+                  alignContent: "center",
+                }}
+                className="valign-wrapper"
+              >
+                <i className="material-icons">account_circle</i>
+                &nbsp;My Profile
+              </a>
+            </li>
+          )}
+          {!user && (
+            <li
               style={{
                 height: "100px",
-                color: "#333",
                 alignContent: "center",
+                padding: "0 1rem",
+                color: "white",
               }}
-              href="/"
             >
-              Jobs
-            </a>
-          </li>
-          <li>
-            <a
-              href="/open-positions"
+              <button
+                id="loginBtn"
+                className="btn-small indigo lighten-2"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+            </li>
+          )}
+          {user && (
+            <li
               style={{
                 height: "100px",
-                color: "#333",
                 alignContent: "center",
+                padding: "0 1rem",
+                color: "white",
               }}
             >
-              Created positions
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              style={{
-                height: "100px",
-                color: "#333",
-                alignContent: "center",
-              }}
-            >
-              Contact
-            </a>
-          </li>
-          <li
-            style={{
-              height: "100px",
-              alignContent: "center",
-              padding: "0 1rem",
-              color: "white",
-            }}
-          >
-            <button id="loginBtn" className="btn indigo lighten-2">
-              Login
-            </button>
-          </li>
+              <button
+                id="logoutBtn"
+                className="btn-small indigo lighten-2"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

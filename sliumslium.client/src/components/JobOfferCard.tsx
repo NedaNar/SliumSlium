@@ -1,8 +1,10 @@
-import { JobOffer } from "../api/apiModel";
+import { JobOffer, UserJobOffer } from "../api/apiModel";
+import { format } from "date-fns";
 import { getExperience, getPartTime, getRemote } from "../utils/enumUtils";
 import "./jobOfferCard.css";
-import { useAppliedOffers } from "../context/AppliedOffersContext";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import useFetch from "../api/useDataFetching";
 
 interface JobOfferProps {
   offer: JobOffer;
@@ -13,6 +15,7 @@ export default function JobOfferCard({
   offer,
   handleCardClick,
 }: JobOfferProps) {
+  const { user } = useContext(UserContext);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 900);
 
   const handleResize = () => {
@@ -26,7 +29,9 @@ export default function JobOfferCard({
     };
   }, []);
 
-  const { appliedOfferIds } = useAppliedOffers();
+  const { data: appliedOffers } = useFetch<UserJobOffer[]>(
+    user ? `UserJobOffer/${user.id_User}` : ""
+  );
 
   return (
     <div className="card job-offer-card" onClick={handleCardClick}>
@@ -37,22 +42,30 @@ export default function JobOfferCard({
         <div className={`${isSmallScreen ? "row" : "col s6"}`}>
           <h5 className="card-title">
             {offer.name}{" "}
-            {appliedOfferIds.has(offer.id_JobOffer) && (
-              <span
-                style={{
-                  backgroundColor: "#b2d8d8",
-                  fontSize: "1rem",
-                  padding: "0.2rem 0.6rem",
-                  borderRadius: "4px",
-                  color: "#004c4c ",
-                  marginLeft: "1rem",
-                }}
-              >
-                Applied
-              </span>
-            )}
+            {user?.type === 1 &&
+              appliedOffers &&
+              appliedOffers.some(
+                (off) => off.fk_JobOfferid_JobOffer === offer.id_JobOffer
+              ) && (
+                <span
+                  style={{
+                    backgroundColor: "#b2d8d8",
+                    fontSize: "1rem",
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: "4px",
+                    color: "#004c4c ",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  Applied
+                </span>
+              )}
           </h5>
-          <h6 className="card-subtitle">{offer.companyName}</h6>
+          <h6 className="card-subtitle">
+            {user?.type === 0
+              ? `Created: ${format(new Date(offer.creationDate), "yyyy-MM-dd")}`
+              : offer.companyName}
+          </h6>
         </div>
 
         <div

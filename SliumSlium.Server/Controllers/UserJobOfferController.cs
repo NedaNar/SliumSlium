@@ -23,7 +23,7 @@ namespace SliumSlium.Server.Controllers
                 .Where(u => u.Fk_Userid_User == userId)
                 .ToListAsync();
 
-            if (userJobOffers == null || !userJobOffers.Any())
+            if (userJobOffers == null)
             {
                 return NotFound(new { Message = "No job offers found for this user." });
             }

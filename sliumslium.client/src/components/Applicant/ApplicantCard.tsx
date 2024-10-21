@@ -11,7 +11,7 @@ export default function ApplicantCard({ applicant }: ApplicantProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="card applicant-card" onClick={() => navigate("")}>
+    <div className="card applicant-card">
       <div className="row valign-wrapper">
         <div className="col s8" style={{ padding: "1rem 2rem 1rem" }}>
           <h5

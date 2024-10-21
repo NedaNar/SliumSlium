@@ -35,3 +35,10 @@ export interface Applicant {
   date: string;
   status: string;
 }
+
+export interface User {
+  id_User: number;
+  name: string;
+  email: string;
+  type: 0 | 1;
+}

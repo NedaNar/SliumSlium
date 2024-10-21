@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import "./signUpPage.css";
+import { UserContext } from "../context/UserContext";
 
 export default function SignUpPage() {
   const navigate = useNavigate();
+  const { signUp } = useContext(UserContext);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState(0);
+  const [role, setRole] = useState<0 | 1>(1);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(`Logging in as ${role}:`, { email, password });
-
-    navigate("/");
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+      type: role,
+      jobOffers: [],
+    };
+    signUp(user);
   };
 
   return (
@@ -25,14 +32,14 @@ export default function SignUpPage() {
         </h4>
         <div className="tab">
           <button
-            className={`tab-link ${role === 0 ? "active" : ""}`}
-            onClick={() => setRole(0)}
+            className={`tab-link ${role === 1 ? "active" : ""}`}
+            onClick={() => setRole(1)}
           >
             Job Seekers
           </button>
           <button
-            className={`tab-link ${role === 1 ? "active" : ""}`}
-            onClick={() => setRole(1)}
+            className={`tab-link ${role === 0 ? "active" : ""}`}
+            onClick={() => setRole(0)}
           >
             Employers
           </button>
@@ -42,13 +49,14 @@ export default function SignUpPage() {
             <div className="input-field">
               <input
                 id="name"
+                type="text"
                 className="validate"
-                value={email}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
               <label htmlFor="name">
-                {role === 0 ? "Name & Surname" : "Company name"}
+                {role === 1 ? "Name & Surname" : "Company name"}
               </label>
             </div>
             <div className="input-field">
@@ -61,7 +69,7 @@ export default function SignUpPage() {
                 required
               />
               <label htmlFor="email">
-                {role === 0 ? "Email" : "Company email"}
+                {role === 1 ? "Email" : "Company email"}
               </label>
             </div>
             <div className="input-field">
