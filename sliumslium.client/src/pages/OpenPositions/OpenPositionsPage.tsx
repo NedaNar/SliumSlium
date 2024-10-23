@@ -2,13 +2,28 @@ import { useNavigate } from "react-router";
 import { JobOffer } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
 import JobOfferCard from "../../components/JobOfferCard";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
+import JobOfferModal from "../../components/Modals/JobOfferModal";
 
 export default function OpenPositionsPage() {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [jobOffers, setJobOffers] = useState<JobOffer[]>([]);
+
   const { data } = useFetch<JobOffer[]>(`JobOffer/user/${user?.id_User}`);
+
+  useEffect(() => {
+    if (data) {
+      setJobOffers(data);
+    }
+  }, [data]);
+
+  const handleNewOffer = (newOffer: JobOffer) => {
+    setJobOffers((prevOffers) => [newOffer, ...prevOffers]);
+    setModalOpen(false);
+  };
 
   return (
     <>
@@ -17,14 +32,18 @@ export default function OpenPositionsPage() {
         <h6 style={{ textAlign: "center", marginBottom: "3rem" }}>
           {user?.name}
         </h6>
-        <button className="btn-large indigo" style={{ margin: "0 0 1rem" }}>
+        <button
+          className="btn-large indigo"
+          style={{ margin: "0 0 1rem" }}
+          onClick={() => setModalOpen(true)}
+        >
           <div className="valign-wrapper">
             <span>Create position &nbsp;</span>
             <i className="large material-icons">add</i>
           </div>
         </button>
-        {data &&
-          data.map((offer, index) => (
+        {jobOffers &&
+          jobOffers.map((offer, index) => (
             <JobOfferCard
               key={index}
               offer={offer}
@@ -36,6 +55,9 @@ export default function OpenPositionsPage() {
             />
           ))}
       </div>
+      <JobOfferModal isOpen={isModalOpen} 
+        onClose={() => setModalOpen(false)}
+        onCreate={handleNewOffer} />
     </>
   );
 }

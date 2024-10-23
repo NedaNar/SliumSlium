@@ -18,9 +18,8 @@ namespace SliumSlium.Server.Models
 
 
         public int Fk_UserId_User { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
 
-        [JsonIgnore]
         public ICollection<Part> Parts { get; set; } = new List<Part>();
     }
 }

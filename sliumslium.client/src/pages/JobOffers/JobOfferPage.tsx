@@ -1,5 +1,4 @@
 import { useLocation } from "react-router";
-import { getExperience, getPartTime, getRemote } from "../../utils/enumUtils";
 import { JobPart, UserJobOffer } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
 import JobOfferPart from "../../components/JobOfferPart";
@@ -8,6 +7,7 @@ import { StatusBadge } from "../../components/StatusBadge";
 import { UserContext } from "../../context/UserContext";
 import { format, isBefore } from "date-fns";
 import { LoginModal } from "../../components/Modals/LoginModal";
+import JobInformation from "../../components/JobInformation";
 
 export default function JobOfferPage() {
   const location = useLocation();
@@ -72,38 +72,7 @@ export default function JobOfferPage() {
                 className="card"
                 style={{ padding: "1rem 2rem", marginTop: "2rem" }}
               >
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">place</i>
-                  <strong>&nbsp;&nbsp;Location:&nbsp;</strong>
-                  {offer.location}
-                </div>
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">show_chart</i>
-                  <strong>&nbsp;&nbsp;Experience:&nbsp;</strong>
-                  {getExperience(offer.experienceLevel)}
-                </div>
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">apartment</i>
-                  <strong>&nbsp;&nbsp;Remote:&nbsp;</strong>
-                  {getRemote(offer.workEnvironment)}
-                </div>
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">schedule</i>
-                  <strong>&nbsp;&nbsp;Part Time:&nbsp;</strong>
-                  {getPartTime(offer.partTime)}
-                </div>
+                <JobInformation offer={offer} />
               </div>
             </div>
           </div>

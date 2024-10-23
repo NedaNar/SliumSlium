@@ -12,6 +12,6 @@ namespace SliumSlium.Server.Models
         public int Fk_JobOfferId_JobOffer { get; set; }
 
         [JsonIgnore]
-        public JobOffer JobOffer { get; set; } 
+        public JobOffer? JobOffer { get; set; } 
     }
 }

@@ -1,0 +1,36 @@
+.large-modal {
+  width: 70% !important ;
+  height: 80% !important ;
+}
+
+.jobOfferModal .row {
+  margin: 0 !important;
+}
+
+.jobOfferModal .col {
+  padding: 0 !important;
+}
+
+.jobOfferModal .input-field {
+  margin: 1.5rem 0;
+}
+
+.dialogTitle {
+  margin-bottom: 2rem;
+}
+
+.dialogSubtitle {
+  margin: 1.5rem 0;
+}
+
+.jobOfferModal .modal-footer {
+  margin-top: 2rem;
+  padding: 0 !important;
+}
+
+.job-part {
+  border: 1px #d3d3d3 solid;
+  border-radius: 8px;
+  padding: 0 1rem 1rem;
+  margin-bottom: 0.5rem;
+}

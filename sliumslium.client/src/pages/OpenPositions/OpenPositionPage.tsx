@@ -1,10 +1,10 @@
 import { useLocation } from "react-router";
 import { Applicant } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
-import { getExperience, getPartTime, getRemote } from "../../utils/enumUtils";
 import ApplicantCard from "../../components/Applicant/ApplicantCard";
 import ApplicantFilters from "../../components/Applicant/ApplicantFilters";
 import { useEffect, useState } from "react";
+import JobInformation from "../../components/JobInformation";
 
 export default function OpenPositionPage() {
   const location = useLocation();
@@ -45,38 +45,7 @@ export default function OpenPositionPage() {
                 className="card"
                 style={{ padding: "1rem 2rem", marginTop: "2rem" }}
               >
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">place</i>
-                  <strong>&nbsp;&nbsp;Location:&nbsp;</strong>
-                  {offer.location}
-                </div>
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">show_chart</i>
-                  <strong>&nbsp;&nbsp;Experience:&nbsp;</strong>
-                  {getExperience(offer.experienceLevel)}
-                </div>
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">apartment</i>
-                  <strong>&nbsp;&nbsp;Remote:&nbsp;</strong>
-                  {getRemote(offer.workEnvironment)}
-                </div>
-                <div
-                  className="row valign-wrapper"
-                  style={{ margin: "0.3rem 0" }}
-                >
-                  <i className="tiny material-icons">schedule</i>
-                  <strong>&nbsp;&nbsp;Part Time:&nbsp;</strong>
-                  {getPartTime(offer.partTime)}
-                </div>
+                <JobInformation offer={offer} />
               </div>
             </div>
           </div>

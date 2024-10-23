@@ -1,10 +1,10 @@
 import { JobOffer, UserJobOffer } from "../api/apiModel";
 import { format } from "date-fns";
-import { getExperience, getPartTime, getRemote } from "../utils/enumUtils";
 import "./jobOfferCard.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import useFetch from "../api/useDataFetching";
+import JobInformation from "./JobInformation";
 
 interface JobOfferProps {
   offer: JobOffer;
@@ -63,13 +63,13 @@ export default function JobOfferCard({
           </h5>
           <h6 className="card-subtitle">
             {user?.type === 0
-              ? `Created: ${format(new Date(offer.creationDate), "yyyy-MM-dd")}`
+              ? `Valid until ${format(new Date(offer.validDate), "yyyy-MM-dd")}`
               : offer.companyName}
           </h6>
         </div>
 
         <div
-          className={`indigo lighten-5 ${
+          className={`${user?.type === 1 ? "indigo lighten-5" : ""} ${
             isSmallScreen ? "row" : "col s3 right"
           }`}
           style={{
@@ -79,35 +79,18 @@ export default function JobOfferCard({
             margin: isSmallScreen ? "0 auto 1rem 0" : "0",
           }}
         >
-          <p style={{ fontSize: "1.1rem", margin: "0" }}>
-            From <strong>{offer.salary} €</strong>/month
-          </p>
+          {user?.type === 1 && (
+            <p style={{ fontSize: "1.1rem", margin: "0" }}>
+              From <strong>{offer.salary} €</strong>/month
+            </p>
+          )}{" "}
         </div>
 
         <div
           className={`${isSmallScreen ? "row" : "col s3 right"}`}
           style={{ padding: "0 0 0 2rem" }}
         >
-          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
-            <i className="tiny material-icons">place</i>
-            <strong>&nbsp;&nbsp;Location:&nbsp;</strong>
-            {offer.location}
-          </div>
-          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
-            <i className="tiny material-icons">show_chart</i>
-            <strong>&nbsp;&nbsp;Experience:&nbsp;</strong>
-            {getExperience(offer.experienceLevel)}
-          </div>
-          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
-            <i className="tiny material-icons">apartment</i>
-            <strong>&nbsp;&nbsp;Remote:&nbsp;</strong>
-            {getRemote(offer.workEnvironment)}
-          </div>
-          <div className="row valign-wrapper" style={{ margin: "0.3rem 0" }}>
-            <i className="tiny material-icons">schedule</i>
-            <strong>&nbsp;&nbsp;Part Time:&nbsp;</strong>
-            {getPartTime(offer.partTime)}
-          </div>
+          <JobInformation offer={offer} />
         </div>
 
         <i className="material-icons arrow-icon">chevron_right</i>

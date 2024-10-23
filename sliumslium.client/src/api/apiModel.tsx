@@ -1,19 +1,21 @@
 export interface JobOffer {
-  id_JobOffer: number;
+  id_JobOffer?: number;
   validDate: string;
   name: string;
   description: string;
   salary: number;
-  creationDate: string;
+  creationDate?: string;
   companyName: string;
   location: string;
   workEnvironment: number;
   experienceLevel: number;
   partTime: boolean;
+  fk_UserId_User?: number;
+  jobParts?: JobPart[];
 }
 
 export interface JobPart {
-  id_Part: number;
+  id_Part?: number;
   name: string;
   description: string;
   requiresFiles: boolean;

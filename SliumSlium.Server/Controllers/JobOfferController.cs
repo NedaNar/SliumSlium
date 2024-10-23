@@ -145,9 +145,10 @@ namespace SliumSlium.Server.Controllers
             var jobOffers = await _context.JobOffer
                 .Where(j => j.Fk_UserId_User == userId)
                 .Include(j => j.Parts)
+                .OrderByDescending(j => j.CreationDate)
                 .ToListAsync();
 
-            if (jobOffers == null || !jobOffers.Any())
+            if (jobOffers == null)
             {
                 return NotFound();
             }
@@ -195,6 +196,35 @@ namespace SliumSlium.Server.Controllers
 
             return Ok(jobOffer.Parts);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<JobOffer>> CreateJobOffer([FromBody] JobOffer jobOffer)
+        {
+            try
+            {
+                jobOffer.CreationDate = DateTime.UtcNow;
+                jobOffer.User = _context.User.Find(jobOffer.Fk_UserId_User);
+
+                if (jobOffer.Parts != null && jobOffer.Parts.Count > 0)
+                {
+                    foreach (var part in jobOffer.Parts)
+                    {
+                        part.Fk_JobOfferId_JobOffer = jobOffer.Id_JobOffer;
+                    }
+                }
+
+                _context.JobOffer.Add(jobOffer);
+
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetJobOffer), new { id = jobOffer.Id_JobOffer }, jobOffer);
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, new { error = exception.Message });
+            }
+        }
+
 
         /*[HttpGet("locations")]
         public async Task<ActionResult<IEnumerable<string>>> GetAllLocations()

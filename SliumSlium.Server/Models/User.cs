@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace SliumSlium.Server.Models
 {
@@ -10,6 +11,7 @@ namespace SliumSlium.Server.Models
         public string Password { get; set; }
         public int Type { get; set; }
 
+        [JsonIgnore]
         public ICollection<JobOffer> JobOffers { get; set; } = new List<JobOffer>();
     }
 }
