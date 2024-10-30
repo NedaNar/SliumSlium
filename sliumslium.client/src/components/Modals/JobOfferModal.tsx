@@ -8,6 +8,7 @@ import {
 } from "../../utils/enumUtils";
 import usePost from "../../api/useDataPosting";
 import { UserContext } from "../../context/UserContext";
+import { toastError, toastSuccess } from "../../utils/toastUtils";
 
 interface ModalProps {
   isOpen: boolean;
@@ -40,7 +41,9 @@ const defaultData = {
 };
 
 function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
-  const { error, responseData, postData } = usePost<JobOffer>("JobOffer");
+  const { error, responseData, postData } = usePost<JobOffer, JobOffer>(
+    "JobOffer"
+  );
   const { user } = useContext(UserContext);
 
   const [currentPart, setCurrentPart] = useState(0);
@@ -161,19 +164,13 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
   useEffect(() => {
     if (responseData) {
       onCreate(responseData);
-      M.toast({
-        html: "Position created!",
-        classes: "green",
-      });
+      toastSuccess("Position created");
     }
   }, [responseData]);
 
   useEffect(() => {
     if (error) {
-      M.toast({
-        html: "Something went wrong, please try again!",
-        classes: "red",
-      });
+      toastError("Something went wrong, please try again!");
     }
   }, [error]);
 

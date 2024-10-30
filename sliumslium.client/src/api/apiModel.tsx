@@ -44,3 +44,8 @@ export interface User {
   email: string;
   type: 0 | 1;
 }
+
+export interface CreateUserJobOfferDTO {
+  fk_JobOfferid_JobOffer: number;
+  fk_Userid_User: number;
+}

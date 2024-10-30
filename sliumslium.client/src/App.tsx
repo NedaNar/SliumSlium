@@ -10,6 +10,7 @@ import SignUpPage from "./pages/SignUpPage";
 import OpenPositionPage from "./pages/OpenPositions/OpenPositionPage";
 import { UserProvider } from "./context/UserContext";
 import PublicRoute from "./utils/PublicRoute";
+import { ApplicantPage } from "./pages/ApplicantPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/job-position/:id" element={<OpenPositionPage />} />
             <Route path="/job-offer/:id" element={<JobOfferPage />} />
+            <Route path="/applicant/:id" element={<ApplicantPage />} />
             <Route
               path="/login"
               element={<PublicRoute element={<LoginPage />} />}

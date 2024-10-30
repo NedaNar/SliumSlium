@@ -1,9 +1,8 @@
-import { JobOffer, UserJobOffer } from "../api/apiModel";
+import { JobOffer } from "../api/apiModel";
 import { format } from "date-fns";
 import "./jobOfferCard.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import useFetch from "../api/useDataFetching";
 import JobInformation from "./JobInformation";
 
 interface JobOfferProps {
@@ -15,7 +14,7 @@ export default function JobOfferCard({
   offer,
   handleCardClick,
 }: JobOfferProps) {
-  const { user } = useContext(UserContext);
+  const { user, userJobOffers } = useContext(UserContext);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 900);
 
   const handleResize = () => {
@@ -29,10 +28,6 @@ export default function JobOfferCard({
     };
   }, []);
 
-  const { data: appliedOffers } = useFetch<UserJobOffer[]>(
-    user ? `UserJobOffer/${user.id_User}` : ""
-  );
-
   return (
     <div className="card job-offer-card" onClick={handleCardClick}>
       <div
@@ -43,8 +38,8 @@ export default function JobOfferCard({
           <h5 className="card-title">
             {offer.name}{" "}
             {user?.type === 1 &&
-              appliedOffers &&
-              appliedOffers.some(
+              userJobOffers &&
+              userJobOffers.some(
                 (off) => off.fk_JobOfferid_JobOffer === offer.id_JobOffer
               ) && (
                 <span

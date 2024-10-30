@@ -1,10 +1,13 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 import axios from "axios";
-import { User } from "../api/apiModel";
+import { User, UserJobOffer } from "../api/apiModel";
 import { useNavigate } from "react-router";
+import useDelayedFetch from "../api/useDelayedDataFetching";
+import { toastError } from "../utils/toastUtils";
 
 interface UserProviderContextType {
   user: User | null;
+  userJobOffers: UserJobOffer[];
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   signUp: (user: Omit<User, "id_User">) => Promise<void>;
@@ -12,6 +15,7 @@ interface UserProviderContextType {
 
 const defaultContext: UserProviderContextType = {
   user: null,
+  userJobOffers: [],
   login: async () => {},
   logout: () => {},
   signUp: async () => {},
@@ -27,6 +31,11 @@ interface UserProviderProps {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
+  const [userJobOffers, setUserJobOffers] = useState<UserJobOffer[]>([]);
+
+  const { data: userJobOffersData, fetchData } = useDelayedFetch<
+    UserJobOffer[]
+  >(`UserJobOffer/user=${user?.id_User}`);
 
   useEffect(() => {
     const fetchAuthenticatedUser = async () => {
@@ -45,6 +54,18 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     fetchAuthenticatedUser();
   }, []);
 
+  useEffect(() => {
+    if (user?.id_User) {
+      fetchData();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (userJobOffersData) {
+      setUserJobOffers(userJobOffersData);
+    }
+  }, [userJobOffersData]);
+
   const login = async (email: string, password: string) => {
     try {
       await axios.post(
@@ -60,10 +81,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       setUser(userResponse.data);
       navigate("/");
     } catch (error) {
-      M.toast({
-        html: "Wrong email or password",
-        classes: "red",
-      });
+      toastError("Wrong email or password");
     }
   };
 
@@ -81,15 +99,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       navigate("/");
     } catch (error: any) {
       if (error.status === 409) {
-        M.toast({
-          html: "Email already exists",
-          classes: "red",
-        });
+        toastError("Email already exists");
       } else {
-        M.toast({
-          html: "Error, please try again",
-          classes: "red",
-        });
+        toastError("Error, please try again");
       }
     }
   };
@@ -102,16 +114,16 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         { withCredentials: true }
       );
       setUser(null);
+      navigate("/");
     } catch (error) {
-      M.toast({
-        html: "Error, please try again",
-        classes: "red",
-      });
+      toastError("Error, please try again");
     }
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, signUp }}>
+    <UserContext.Provider
+      value={{ user, userJobOffers, login, logout, signUp }}
+    >
       {children}
     </UserContext.Provider>
   );

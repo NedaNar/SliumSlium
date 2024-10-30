@@ -5,6 +5,7 @@ import {
   WORK_ENVIRONMENT_OPTIONS,
 } from "../../utils/enumUtils";
 import M from "materialize-css";
+import { toastError } from "../../utils/toastUtils";
 
 interface FiltersProps {
   onFilterChange: (filters: any) => void;
@@ -41,10 +42,9 @@ export default function Filters({ onFilterChange }: FiltersProps) {
       fetch(`https://localhost:7091/api/JobOffer/Query?${queryParams}`)
         .then(async (response) => {
           if (!response.ok) {
-            M.toast({
-              html: `API returned error: ${response.status} ${response.statusText}`,
-              classes: "red",
-            });
+            toastError(
+              `API returned error: ${response.status} ${response.statusText}`
+            );
           }
           return response.text();
         })
@@ -55,19 +55,13 @@ export default function Filters({ onFilterChange }: FiltersProps) {
             const fetchedLength = Array.isArray(jsonData) ? jsonData.length : 0;
 
             if (fetchedLength === 0) {
-              M.toast({
-                html: "No job offers found. Try adjusting the filters.",
-                classes: "red",
-              });
+              toastError("No job offers found. Try adjusting the filters.");
             }
             onFilterChange(jsonData);
           } catch (error) {}
         })
         .catch((error) => {
-          M.toast({
-            html: `Error fetching job offers: ${error}`,
-            classes: "red",
-          });
+          toastError(`Error fetching job offers: ${error}`);
         });
     }
   };

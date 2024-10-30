@@ -12,11 +12,11 @@ namespace SliumSlium.Server.Models
         public int Fk_JobOfferid_JobOffer { get; set; }
 
         [JsonIgnore]
-        public JobOffer JobOffer { get; set; }
+        public JobOffer? JobOffer { get; set; }
 
         public int Fk_Userid_User { get; set; }
 
         [JsonIgnore]
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }

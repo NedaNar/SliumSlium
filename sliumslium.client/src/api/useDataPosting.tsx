@@ -1,20 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
 
-interface PostResult<T> {
-  responseData: T | null;
+interface PostResult<RequestType, ResponseType> {
+  responseData: ResponseType | null;
   error: boolean;
-  postData: (data: T) => void;
+  postData: (data: RequestType) => void;
 }
 
-function usePost<T>(endpoint: string): PostResult<T> {
-  const [responseData, setResponseData] = useState<T | null>(null);
+function usePost<RequestType, ResponseType>(
+  endpoint: string
+): PostResult<RequestType, ResponseType> {
+  const [responseData, setResponseData] = useState<ResponseType | null>(null);
   const [error, setError] = useState<boolean>(false);
 
-  const postData = async (data: T) => {
+  const postData = async (data: RequestType) => {
     try {
       const url = `https://localhost:7091/api/${endpoint}`;
-      const response = await axios.post<T>(url, data);
+      const response = await axios.post<ResponseType>(url, data);
 
       if (response.status === 201 || response.status === 200) {
         setResponseData(response.data);
@@ -23,7 +25,6 @@ function usePost<T>(endpoint: string): PostResult<T> {
       }
     } catch (postError) {
       setError(true);
-    } finally {
     }
   };
 

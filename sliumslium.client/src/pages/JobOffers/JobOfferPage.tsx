@@ -1,5 +1,10 @@
 import { useLocation } from "react-router";
-import { JobPart, UserJobOffer } from "../../api/apiModel";
+import {
+  CreateUserJobOfferDTO,
+  JobOffer,
+  JobPart,
+  UserJobOffer,
+} from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
 import JobOfferPart from "../../components/JobOfferPart";
 import { useContext, useEffect, useState } from "react";
@@ -8,12 +13,14 @@ import { UserContext } from "../../context/UserContext";
 import { format, isBefore } from "date-fns";
 import { LoginModal } from "../../components/Modals/LoginModal";
 import JobInformation from "../../components/JobInformation";
+import usePost from "../../api/useDataPosting";
+import { toastError } from "../../utils/toastUtils";
 
 export default function JobOfferPage() {
   const location = useLocation();
-  const offer = location.state?.offer;
+  const offer: JobOffer = location.state?.offer;
 
-  const { user } = useContext(UserContext);
+  const { user, userJobOffers } = useContext(UserContext);
   const [userJobOffer, setUserJobOffer] = useState<UserJobOffer | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,25 +28,43 @@ export default function JobOfferPage() {
     `JobOffer/${offer.id_JobOffer}/parts`
   );
 
-  const { data: appliedOffers } = useFetch<UserJobOffer[]>(
-    user ? `UserJobOffer/${user?.id_User}` : ""
-  );
+  const { error, responseData, postData } = usePost<
+    CreateUserJobOfferDTO,
+    UserJobOffer
+  >("UserJobOffer");
 
   useEffect(() => {
-    if (appliedOffers) {
-      const foundOffer = appliedOffers.find(
+    if (userJobOffers) {
+      const foundOffer = userJobOffers.find(
         (o) => o.fk_JobOfferid_JobOffer === offer.id_JobOffer
       );
       setUserJobOffer(foundOffer || null);
     }
-  }, [appliedOffers]);
+  }, [userJobOffers]);
 
   const handleApplyClick = () => {
     if (!user) {
       setIsModalOpen(true);
-    } else {
+      return;
     }
+
+    postData({
+      fk_JobOfferid_JobOffer: offer.id_JobOffer!,
+      fk_Userid_User: user.id_User,
+    });
   };
+
+  useEffect(() => {
+    if (responseData) {
+      setUserJobOffer(responseData);
+    }
+  }, [responseData]);
+
+  useEffect(() => {
+    if (error) {
+      toastError("Error, try again later :(");
+    }
+  }, [error]);
 
   return (
     <>
@@ -51,20 +76,16 @@ export default function JobOfferPage() {
               <h4>{offer.name}</h4>
               <p>{offer.companyName}</p>
               <p style={{ margin: "0 2rem 0 0" }}>{offer.description}</p>
-              {user?.type !== 0 &&
-                (!appliedOffers ||
-                  !appliedOffers.some(
-                    (off) => off.fk_JobOfferid_JobOffer === offer.id_JobOffer
-                  )) && (
-                  <button
-                    className="btn-large indigo lighten-1"
-                    style={{ margin: "2rem 0 0" }}
-                    disabled={isBefore(offer.validDate, new Date())}
-                    onClick={handleApplyClick}
-                  >
-                    Apply
-                  </button>
-                )}
+              {user?.type !== 0 && userJobOffer === null && (
+                <button
+                  className="btn-large indigo lighten-1"
+                  style={{ margin: "2rem 0 0" }}
+                  disabled={isBefore(offer.validDate, new Date())}
+                  onClick={handleApplyClick}
+                >
+                  Apply
+                </button>
+              )}
             </div>
 
             <div className="col s12 m6 l5">
@@ -109,15 +130,7 @@ export default function JobOfferPage() {
                       <JobOfferPart
                         key={index}
                         part={part}
-                        applied={
-                          appliedOffers
-                            ? appliedOffers.some(
-                                (off) =>
-                                  off.fk_JobOfferid_JobOffer ===
-                                  offer.id_JobOffer
-                              )
-                            : false
-                        }
+                        applied={userJobOffer != null}
                         isCurrent={isCurrentPart}
                       />
                     </>

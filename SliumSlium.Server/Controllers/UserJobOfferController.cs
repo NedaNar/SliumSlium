@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SliumSlium.Server.DTO;
 using SliumSlium.Server.Models;
 
 namespace SliumSlium.Server.Controllers
@@ -15,7 +16,7 @@ namespace SliumSlium.Server.Controllers
             _context = context;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("user={userId}")]
         public async Task<ActionResult<IEnumerable<UserJobOffer>>> GetUserJobOffers(int userId)
         {
             var userJobOffers = await _context.UserJobOffer
@@ -29,6 +30,54 @@ namespace SliumSlium.Server.Controllers
             }
 
             return Ok(userJobOffers);
+        }
+
+        [HttpGet("{userId}/{jobOfferId}")]
+        public async Task<ActionResult<UserJobOffer?>> GetUserJobOffer(int userId, int jobOfferId)
+        {
+            var userJobOffer = await _context.UserJobOffer
+                .Include(u => u.JobOffer)
+                .FirstOrDefaultAsync(u => u.Fk_Userid_User == userId && u.Fk_JobOfferid_JobOffer == jobOfferId);
+
+            return Ok(userJobOffer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUserJobOffer([FromBody] CreateUserJobOfferDTO userJobOfferDTO)
+        {
+            var userJobOffer = new UserJobOffer
+            {
+                Fk_JobOfferid_JobOffer = userJobOfferDTO.Fk_JobOfferid_JobOffer,
+                Fk_Userid_User = userJobOfferDTO.Fk_Userid_User,
+                ApplicationDate = DateTime.Now,
+                CurrentPart = 1,
+                Status = "Submitted"
+            };
+
+            try
+            {
+                _context.UserJobOffer.Add(userJobOffer);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetUserJobOfferById), new { id = userJobOffer.Id_UserJobOffer }, userJobOffer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserJobOffer>> GetUserJobOfferById(int id)
+        {
+            var userJobOffer = await _context.UserJobOffer.FindAsync(id);
+
+            if (userJobOffer == null)
+            {
+                return NotFound();
+            }
+
+            return userJobOffer;
         }
     }
 }

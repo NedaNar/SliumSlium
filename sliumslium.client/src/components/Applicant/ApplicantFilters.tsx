@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { STATUS_OPTIONS } from "../../utils/enumUtils";
 import M from "materialize-css";
 import axios from "axios";
+import { toastError } from "../../utils/toastUtils";
 
 interface ApplicantFiltersProps {
   offerId: number;
@@ -37,9 +38,7 @@ export default function ApplicantFilters({
       );
       onFilterChange(response.data);
     } catch (error) {
-      M.toast({
-        html: "Error getting applicants",
-      });
+      toastError("Error getting applicants");
     }
   };
 
@@ -53,9 +52,7 @@ export default function ApplicantFilters({
       );
       onFilterChange(response.data);
     } catch (error) {
-      M.toast({
-        html: "Error getting applicants",
-      });
+      toastError("Error getting applicants");
     }
 
     setTimeout(() => {
