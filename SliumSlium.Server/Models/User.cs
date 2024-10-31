@@ -13,5 +13,8 @@ namespace SliumSlium.Server.Models
 
         [JsonIgnore]
         public ICollection<JobOffer> JobOffers { get; set; } = new List<JobOffer>();
+
+        [JsonIgnore]
+        public ICollection<Upload> Uploads { get; set; } = new List<Upload>();
     }
 }

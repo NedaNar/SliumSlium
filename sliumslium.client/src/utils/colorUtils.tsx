@@ -1,19 +1,29 @@
-export const getBadgeBackground = (jobOffer: string) => {
-  return jobOffer === "In Progress"
+export const getBadgeBackground = (status: string) => {
+  return status === "In Progress"
     ? "#ffc594"
-    : jobOffer === "Denied"
+    : status === "Denied"
     ? "#f69697"
-    : jobOffer === "Accepted"
+    : status === "Accepted"
     ? "#cee38e"
     : "#b2d8d8";
 };
 
-export const getBadgeColor = (jobOffer: string) => {
-  return jobOffer === "In Progress"
+export const getBadgeColor = (status: string) => {
+  return status === "In Progress"
     ? "#7f400b"
-    : jobOffer === "Denied"
+    : status === "Denied"
     ? "#430c08"
-    : jobOffer === "Accepted"
+    : status === "Accepted"
     ? "#254118"
     : "#004c4c ";
+};
+
+export const getBadgeTooltip = (status: string) => {
+  return status === "In Progress"
+    ? "Hiring manager is considering your application"
+    : status === "Denied"
+    ? "Sorry to tell, but your application was not successful"
+    : status === "Accepted"
+    ? "Congratulations! You got the job!"
+    : "Your application was not seen by hiring manager yet";
 };

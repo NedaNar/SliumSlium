@@ -49,3 +49,17 @@ export interface CreateUserJobOfferDTO {
   fk_JobOfferid_JobOffer: number;
   fk_Userid_User: number;
 }
+
+export interface FileUploadDTO {
+  partId: number;
+  userId: number;
+  filePath: string;
+}
+
+export interface FileUpload {
+  id: number;
+  filePath: string;
+  uploadDate: string;
+  partId: number;
+  userId: number;
+}

@@ -122,3 +122,17 @@ VALUES
     -- Clark Kent's applications
     ('Accepted', '2024-10-09', 1, 1004, 1005),     -- Clark Kent accepted for Project Manager (JobOffer ID 6)
     ('Submitted', '2024-10-07', 1, 1002, 1005);    -- Clark Kent applies to Frontend Developer (JobOffer ID 4)
+
+    !!! Adjustments !!!
+    
+    CREATE TABLE Upload
+(
+    filePath varchar(255),
+    uploadDate date DEFAULT GETDATE(),
+    id_File int IDENTITY(1,1),
+    fk_Partid_Part int NOT NULL,
+    fk_Userid_User int NOT NULL,
+    PRIMARY KEY(id_File),
+    CONSTRAINT UploadedFor FOREIGN KEY(fk_Partid_Part) REFERENCES Part(id_Part),
+    CONSTRAINT UploadedBy FOREIGN KEY(fk_Userid_User) REFERENCES [User](id_User)
+);

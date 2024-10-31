@@ -11,6 +11,8 @@ public class DatabaseContext : DbContext
     public DbSet<JobOffer> JobOffer { get; set; }
     public DbSet<Part> Part { get; set; }
     public DbSet<UserJobOffer> UserJobOffer { get; set; }
+    public DbSet<Upload> Upload { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,5 +47,9 @@ public class DatabaseContext : DbContext
             .HasOne(uj => uj.User)
             .WithMany()
             .HasForeignKey(uj => uj.Fk_Userid_User);
+
+        modelBuilder.Entity<Upload>()
+            .Property(f => f.UploadDate)
+            .HasDefaultValueSql("GETDATE()");
     }
 }

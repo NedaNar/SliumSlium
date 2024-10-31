@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getBadgeBackground, getBadgeColor } from "../utils/colorUtils";
+import {
+  getBadgeBackground,
+  getBadgeColor,
+  getBadgeTooltip,
+} from "../utils/colorUtils";
 
 interface StatusBadgeProps {
   status: string;
@@ -13,6 +17,9 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
   };
 
   useEffect(() => {
+    const tooltipElements = document.querySelectorAll(".tooltipped");
+    M.Tooltip.init(tooltipElements);
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -21,6 +28,8 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
 
   return (
     <span
+      className="tooltipped"
+      data-tooltip={getBadgeTooltip(status)}
       style={{
         backgroundColor: getBadgeBackground(status),
         fontSize: "1rem",
@@ -28,6 +37,7 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
         borderRadius: "4px",
         color: getBadgeColor(status),
         marginLeft: "1rem",
+        cursor: "pointer",
       }}
     >
       {isSmallScreen ? "" : "Application"} {status}

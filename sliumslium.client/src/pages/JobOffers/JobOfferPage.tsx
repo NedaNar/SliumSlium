@@ -126,14 +126,12 @@ export default function JobOfferPage() {
                     : false;
 
                   return (
-                    <>
-                      <JobOfferPart
-                        key={index}
-                        part={part}
-                        applied={userJobOffer != null}
-                        isCurrent={isCurrentPart}
-                      />
-                    </>
+                    <JobOfferPart
+                      key={`${part.id_Part}-${index}`}
+                      part={part}
+                      applied={userJobOffer != null}
+                      isCurrent={isCurrentPart}
+                    />
                   );
                 })}
             </div>

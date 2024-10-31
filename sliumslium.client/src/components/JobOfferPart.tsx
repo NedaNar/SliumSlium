@@ -1,6 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { JobPart } from "../api/apiModel";
+import { FileUpload, FileUploadDTO, JobPart } from "../api/apiModel";
+import { UserContext } from "../context/UserContext";
+import usePost from "../api/useDataPosting";
+import { toastError, toastSuccess } from "../utils/toastUtils";
+import useDelayedFetch from "../api/useDelayedDataFetching";
+import { format } from "date-fns";
+import {
+  getCloudinarySignature,
+  toBase64,
+  uploadFileToCloudinary,
+} from "../utils/fileUploadUtils";
 
 interface JobPartProps {
   part: JobPart;
@@ -15,7 +25,19 @@ export default function JobOfferPart({
 }: JobPartProps) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const collapsibleRef = useRef<HTMLUListElement>(null);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<FileUpload | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
+
+  const { user } = useContext(UserContext);
+
+  const { data: fileData, fetchData } = useDelayedFetch<FileUpload>(
+    `FileUpload/${user?.id_User}&${part.id_Part}`
+  );
+
+  const { error, responseData, postData } = usePost<FileUploadDTO, FileUpload>(
+    "FileUpload/upload"
+  );
 
   useEffect(() => {
     if (isCurrent && applied) {
@@ -25,15 +47,21 @@ export default function JobOfferPart({
     }
   }, [isCurrent]);
 
+  useEffect(() => {
+    if (user?.id_User && isCurrent && applied) {
+      fetchData();
+    }
+  }, [user, isCurrent]);
+
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     onDrop: (acceptedFiles) => {
-      setUploadedFile(acceptedFiles[0] || null);
+      setSelectedFile(acceptedFiles[0] || null);
     },
   });
 
   const handleRemoveFile = () => {
-    setUploadedFile(null);
+    setSelectedFile(null);
   };
 
   const handleCollapsibleClick = (e: React.MouseEvent) => {
@@ -43,6 +71,49 @@ export default function JobOfferPart({
     }
     setIsCollapsed((prev) => !prev);
   };
+
+  const handleFileUpload = async () => {
+    if (!selectedFile) return;
+
+    setUploading(true);
+    try {
+      const { signature, timestamp } = await getCloudinarySignature();
+      const fileData = await toBase64(selectedFile);
+      const uploadResponse = await uploadFileToCloudinary(
+        fileData,
+        signature,
+        timestamp
+      );
+
+      postData({
+        partId: part.id_Part!,
+        userId: user?.id_User!,
+        filePath: uploadResponse.data.secure_url,
+      });
+    } catch (error) {
+      toastError("Error uploading File!");
+      setUploading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (responseData) {
+      toastSuccess("File uploaded!");
+      setUploading(false);
+      setUploadedFile(responseData);
+    }
+  }, [responseData]);
+
+  useEffect(() => {
+    if (fileData) {
+      setUploadedFile(fileData);
+    }
+  }, [fileData]);
+
+  useEffect(() => {
+    if (error) toastError("Error uploading uploadedFile!");
+    setUploading(false);
+  }, [error]);
 
   return (
     <ul className="collapsible" ref={collapsibleRef}>
@@ -61,10 +132,10 @@ export default function JobOfferPart({
         </div>
 
         <div className="collapsible-body">
-          <p>{part.description}</p>
+          {!uploadedFile && <p>{part.description}</p>}
 
-          {part.requiresFiles && (
-            <div className="file-dropzone">
+          {part.requiresFiles && !uploadedFile && (
+            <div className="uploadedFile-dropzone">
               <div
                 {...getRootProps({
                   className: "dropzone",
@@ -78,17 +149,17 @@ export default function JobOfferPart({
               >
                 <input {...getInputProps()} />
                 <p>
-                  {uploadedFile
-                    ? "Replace the file by dragging a new one here"
-                    : "Drag & drop a file here, or click to select a file"}
+                  {selectedFile
+                    ? "Replace the uploadedFile by dragging a new one here"
+                    : "Drag & drop a uploadedFile here, or click to select a uploadedFile"}
                 </p>
               </div>
 
-              {uploadedFile && (
+              {selectedFile && (
                 <>
                   <div className="valign-wrapper" style={{ marginTop: "1rem" }}>
                     <span>
-                      {uploadedFile.name} - {uploadedFile.size} bytes
+                      {selectedFile.name} - {selectedFile.size} bytes
                     </span>
                     <button
                       style={{ padding: "2px 8px 0" }}
@@ -98,18 +169,33 @@ export default function JobOfferPart({
                       <i className="tiny material-icons">close</i>
                     </button>
                   </div>
-                  {uploadedFile && (
+                  {selectedFile && (
                     <button
+                      disabled={uploading}
                       style={{ margin: "1rem 0 0" }}
-                      onClick={handleRemoveFile}
+                      onClick={handleFileUpload}
                       className="btn indigo lighten-2"
                     >
-                      Submit
+                      {uploading ? "Uploading..." : "Submit"}
                     </button>
                   )}
                 </>
               )}
             </div>
+          )}
+
+          {uploadedFile && (
+            <>
+              <div className="valign-wrapper">
+                <i className="material-icons green-text">check_circle</i>&nbsp;
+                <p style={{ fontSize: "1.2rem" }}>Your file was submitted!</p>
+              </div>
+              <p>
+                Upload date:{" "}
+                {format(new Date(uploadedFile.uploadDate), "yyyy-MM-dd")}
+              </p>
+              <p>Please wait for the hiring manager to review it.</p>
+            </>
           )}
         </div>
       </li>
