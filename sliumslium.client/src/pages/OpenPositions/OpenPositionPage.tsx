@@ -4,7 +4,7 @@ import useFetch from "../../api/useDataFetching";
 import ApplicantCard from "../../components/Applicant/ApplicantCard";
 import ApplicantFilters from "../../components/Applicant/ApplicantFilters";
 import { useEffect, useState } from "react";
-import JobInformation from "../../components/JobInformation";
+import JobInformation from "../../components/JobOffer/JobInformation";
 
 export default function OpenPositionPage() {
   const location = useLocation();
@@ -32,10 +32,7 @@ export default function OpenPositionPage() {
               <h4>{offer.name}</h4>
               <p>{offer.companyName}</p>
               <p style={{ margin: "0 2rem 0 0" }}>{offer.description}</p>
-              <button
-                className="btn  red lighten-2"
-                style={{ margin: "2rem 0 0" }}
-              >
+              <button className="btn-flat" style={{ margin: "2rem 0 0" }}>
                 <div className="valign-wrapper">
                   Remove position &nbsp;
                   <i className="tiny material-icons">close</i>
@@ -63,7 +60,7 @@ export default function OpenPositionPage() {
             />
             {applicants &&
               applicants.map((appl, index) => (
-                <ApplicantCard key={index} applicant={appl} />
+                <ApplicantCard key={index} applicant={appl} offer={offer} />
               ))}
             {(!applicants || applicants.length === 0) && (
               <h5 className="center-align">No applicants found :(</h5>

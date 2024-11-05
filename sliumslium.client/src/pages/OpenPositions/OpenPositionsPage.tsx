@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { JobOffer } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
-import JobOfferCard from "../../components/JobOfferCard";
+import JobOfferCard from "../../components/JobOffer/JobOfferCard";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import JobOfferModal from "../../components/Modals/JobOfferModal";
@@ -55,9 +55,11 @@ export default function OpenPositionsPage() {
             />
           ))}
       </div>
-      <JobOfferModal isOpen={isModalOpen} 
+      <JobOfferModal
+        isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        onCreate={handleNewOffer} />
+        onCreate={handleNewOffer}
+      />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { JobOffer } from "../../api/apiModel";
-import JobOfferCard from "../../components/JobOfferCard";
+import JobOfferCard from "../../components/JobOffer/JobOfferCard";
 import { useNavigate } from "react-router";
 
 interface PaginationProps {
@@ -29,9 +29,7 @@ export default function Pagination({ jobOffers }: PaginationProps) {
             key={offer.id_JobOffer}
             offer={offer}
             handleCardClick={() => {
-              navigate(`/job-offer/${offer.id_JobOffer}`, {
-                state: { offer },
-              });
+              navigate(`/job-offer/${offer.id_JobOffer}`);
             }}
           />
         ))}

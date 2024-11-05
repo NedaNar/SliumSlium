@@ -1,18 +1,13 @@
 .applicant-card {
-  transition: transform 0.3s ease;
   width: "100%";
   position: "relative";
   cursor: "pointer";
 }
 
-.applicant-card:hover {
-  transform: translateX(-20px);
-}
-
 .arrow-icon {
   position: absolute;
   right: 20px;
-  top: 50%;
+  top: 35px;
   transform: translateY(-50%);
   font-size: 24px;
   opacity: 0;

@@ -1,8 +1,8 @@
-import { JobOffer } from "../api/apiModel";
+import { JobOffer } from "../../api/apiModel";
 import { format } from "date-fns";
 import "./jobOfferCard.css";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import JobInformation from "./JobInformation";
 
 interface JobOfferProps {

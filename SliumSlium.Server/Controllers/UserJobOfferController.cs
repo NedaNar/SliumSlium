@@ -79,5 +79,28 @@ namespace SliumSlium.Server.Controllers
 
             return userJobOffer;
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUserJobOffer(int id, [FromBody] UpdateUserJobOfferDTO userJobOfferDTO)
+        {
+            var userJobOffer = await _context.UserJobOffer.FindAsync(id);
+
+            if (userJobOffer == null)
+            {
+                return NotFound(new { Message = "User job offer not found." });
+            }
+
+            try
+            {
+                userJobOffer.Status = userJobOfferDTO.Status;
+                userJobOffer.CurrentPart = userJobOfferDTO.CurrentPart;
+                await _context.SaveChangesAsync();
+                return Ok(new { Message = "Updated" });
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
     }
 }

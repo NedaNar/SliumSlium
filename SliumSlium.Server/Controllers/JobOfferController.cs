@@ -74,12 +74,14 @@ namespace SliumSlium.Server.Controllers
             var query = _context.UserJobOffer
                 .Where(ujo => ujo.Fk_JobOfferid_JobOffer == id)
                 .Include(ujo => ujo.User)
-                .Select(ujo => new UserDTO
+                .Select(ujo => new ApplicantDTO
                 {
                     Id = ujo.Fk_Userid_User,
+                    UserJobOfferId = ujo.Id_UserJobOffer,
                     Name = ujo.User.Name,
                     Email = ujo.User.Email,
                     Status = ujo.Status,
+                    CurrentPart = ujo.CurrentPart,
                     Date = ujo.ApplicationDate.ToString()
                 });
 
@@ -163,12 +165,14 @@ namespace SliumSlium.Server.Controllers
                 .Where(ujo => ujo.Fk_JobOfferid_JobOffer == id)
                 .Include(ujo => ujo.User)
                 .OrderBy(ujo => ujo.ApplicationDate)
-                .Select(ujo => new UserDTO
+                .Select(ujo => new ApplicantDTO
                 {
                     Id = ujo.Fk_Userid_User,
+                    UserJobOfferId = ujo.Id_UserJobOffer,
                     Name = ujo.User.Name,
                     Email = ujo.User.Email,
                     Status = ujo.Status,
+                    CurrentPart = ujo.CurrentPart,
                     Date = ujo.ApplicationDate.ToString()
                 })
                 .ToListAsync();

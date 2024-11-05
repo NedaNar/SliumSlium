@@ -1,32 +1,27 @@
-import { useLocation } from "react-router";
+import { useParams } from "react-router";
 import {
   CreateUserJobOfferDTO,
   JobOffer,
-  JobPart,
   UserJobOffer,
 } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
-import JobOfferPart from "../../components/JobOfferPart";
+import JobOfferPart from "../../components/JobOffer/JobOfferPart";
 import { useContext, useEffect, useState } from "react";
 import { StatusBadge } from "../../components/StatusBadge";
 import { UserContext } from "../../context/UserContext";
 import { format, isBefore } from "date-fns";
 import { LoginModal } from "../../components/Modals/LoginModal";
-import JobInformation from "../../components/JobInformation";
+import JobInformation from "../../components/JobOffer/JobInformation";
 import usePost from "../../api/useDataPosting";
 import { toastError } from "../../utils/toastUtils";
 
 export default function JobOfferPage() {
-  const location = useLocation();
-  const offer: JobOffer = location.state?.offer;
-
+  const { id } = useParams();
   const { user, userJobOffers } = useContext(UserContext);
   const [userJobOffer, setUserJobOffer] = useState<UserJobOffer | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: parts } = useFetch<JobPart[]>(
-    `JobOffer/${offer.id_JobOffer}/parts`
-  );
+  const { data: offer } = useFetch<JobOffer>(`JobOffer/${id}`);
 
   const { error, responseData, postData } = usePost<
     CreateUserJobOfferDTO,
@@ -34,13 +29,13 @@ export default function JobOfferPage() {
   >("UserJobOffer");
 
   useEffect(() => {
-    if (userJobOffers) {
+    if (userJobOffers && offer) {
       const foundOffer = userJobOffers.find(
         (o) => o.fk_JobOfferid_JobOffer === offer.id_JobOffer
       );
       setUserJobOffer(foundOffer || null);
     }
-  }, [userJobOffers]);
+  }, [userJobOffers, offer]);
 
   const handleApplyClick = () => {
     if (!user) {
@@ -49,7 +44,7 @@ export default function JobOfferPage() {
     }
 
     postData({
-      fk_JobOfferid_JobOffer: offer.id_JobOffer!,
+      fk_JobOfferid_JobOffer: offer!.id_JobOffer!,
       fk_Userid_User: user.id_User,
     });
   };
@@ -102,7 +97,10 @@ export default function JobOfferPage() {
             <h5 style={{ margin: "4rem 0 0rem" }}>
               Application steps{" "}
               {userJobOffer && (
-                <StatusBadge status={userJobOffer.status.trim()} />
+                <StatusBadge
+                  status={userJobOffer.status.trim()}
+                  showTooltip={true}
+                />
               )}
             </h5>
             <div style={{ margin: "1rem 0" }}>
@@ -119,18 +117,15 @@ export default function JobOfferPage() {
               </span>
             </div>
             <div style={{ margin: "2rem 0 0rem" }}>
-              {parts &&
-                parts.map((part, index) => {
-                  const isCurrentPart = userJobOffer
-                    ? userJobOffer.currentPart === index + 1
-                    : false;
-
+              {offer.parts &&
+                offer.parts.map((part, index) => {
                   return (
                     <JobOfferPart
                       key={`${part.id_Part}-${index}`}
                       part={part}
+                      partNumber={index + 1}
                       applied={userJobOffer != null}
-                      isCurrent={isCurrentPart}
+                      currentPart={userJobOffer?.currentPart}
                     />
                   );
                 })}

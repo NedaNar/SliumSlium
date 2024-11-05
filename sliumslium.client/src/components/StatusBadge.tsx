@@ -7,9 +7,10 @@ import {
 
 interface StatusBadgeProps {
   status: string;
+  showTooltip?: boolean;
 }
 
-export const StatusBadge = ({ status }: StatusBadgeProps) => {
+export const StatusBadge = ({ status, showTooltip }: StatusBadgeProps) => {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 900);
 
   const handleResize = () => {
@@ -17,8 +18,10 @@ export const StatusBadge = ({ status }: StatusBadgeProps) => {
   };
 
   useEffect(() => {
-    const tooltipElements = document.querySelectorAll(".tooltipped");
-    M.Tooltip.init(tooltipElements);
+    if (showTooltip) {
+      const tooltipElements = document.querySelectorAll(".tooltipped");
+      M.Tooltip.init(tooltipElements);
+    }
 
     window.addEventListener("resize", handleResize);
     return () => {

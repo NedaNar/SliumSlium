@@ -1,5 +1,5 @@
-import { JobOffer } from "../api/apiModel";
-import { getExperience, getPartTime, getRemote } from "../utils/enumUtils";
+import { JobOffer } from "../../api/apiModel";
+import { getExperience, getPartTime, getRemote } from "../../utils/enumUtils";
 
 interface JobInformationProps {
   offer: JobOffer;

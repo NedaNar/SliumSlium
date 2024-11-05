@@ -11,7 +11,7 @@ export interface JobOffer {
   experienceLevel: number;
   partTime: boolean;
   fk_UserId_User?: number;
-  jobParts?: JobPart[];
+  parts?: JobPart[];
 }
 
 export interface JobPart {
@@ -36,6 +36,8 @@ export interface Applicant {
   email: string;
   date: string;
   status: string;
+  currentPart: number;
+  userJobOfferId: number;
 }
 
 export interface User {
@@ -62,4 +64,9 @@ export interface FileUpload {
   uploadDate: string;
   partId: number;
   userId: number;
+}
+
+export interface ApplicantUpdateDTO {
+  status: string;
+  currentPart: number;
 }
