@@ -76,7 +76,7 @@ export default function ApplicantFilters({
     <div
       className="grey lighten-4"
       style={{
-        padding: "0.5rem 2% 0rem",
+        padding: "0.5rem 2% 0.5rem",
         margin: "2rem 0",
         borderRadius: "8px",
       }}

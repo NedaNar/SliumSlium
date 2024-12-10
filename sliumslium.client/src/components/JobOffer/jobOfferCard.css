@@ -22,3 +22,19 @@
 .job-offer-card:hover .arrow-icon {
   opacity: 1;
 }
+
+@media (max-width: 768px) {
+  .job-offer-card {
+    transition: none;
+  }
+
+  .job-offer-card:hover {
+    transition: none;
+  }
+
+  .arrow-icon {
+    transition: none;
+    font-size: 20px;
+    opacity: 1;
+  }
+}

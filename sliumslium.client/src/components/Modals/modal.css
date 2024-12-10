@@ -34,3 +34,11 @@
   padding: 0 1rem 1rem;
   margin-bottom: 0.5rem;
 }
+
+@media (max-width: 600px) {
+  .large-modal {
+    width: 100% !important ;
+    height: 100% !important;
+    max-height: 100% !important;
+  }
+}

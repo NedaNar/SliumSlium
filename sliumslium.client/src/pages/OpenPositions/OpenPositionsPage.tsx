@@ -5,6 +5,7 @@ import JobOfferCard from "../../components/JobOffer/JobOfferCard";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import JobOfferModal from "../../components/Modals/JobOfferModal";
+import "./openPositionsPage.css";
 
 export default function OpenPositionsPage() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function OpenPositionsPage() {
   return (
     <>
       <div>
-        <h1 style={{ textAlign: "center" }}>Created Positions</h1>
+        <h1 className="openPositions_header">Created Positions</h1>
         <h6 style={{ textAlign: "center", marginBottom: "3rem" }}>
           {user?.name}
         </h6>
@@ -38,7 +39,7 @@ export default function OpenPositionsPage() {
           onClick={() => setModalOpen(true)}
         >
           <div className="valign-wrapper">
-            <span>Create position &nbsp;</span>
+            <span>New position &nbsp;</span>
             <i className="large material-icons">add</i>
           </div>
         </button>

@@ -4,7 +4,7 @@
   cursor: "pointer";
 }
 
-.arrow-icon {
+.arrow-icon-appl {
   position: absolute;
   right: 20px;
   top: 35px;
@@ -14,6 +14,21 @@
   transition: opacity 0.3s ease;
 }
 
-.applicant-card:hover .arrow-icon {
+.applicant-card:hover .arrow-icon-appl {
   opacity: 1;
+}
+
+.applicant-contacts {
+  padding-left: 2rem;
+}
+
+@media (max-width: 600px) {
+  .applicant-contacts {
+    margin-top: 1rem;
+    padding-left: 0rem;
+  }
+
+  .arrow-icon-appl {
+    opacity: 1;
+  }
 }

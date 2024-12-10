@@ -1,93 +1,65 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router";
+import "./header.css";
 
 export default function Header() {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 900);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleResize = () => {
+    setIsSmallScreen(window.innerWidth < 900);
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <nav
-      className="white valign-wrapper"
-      style={{
-        height: "100px",
-        boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.2)",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        zIndex: 100,
-      }}
-    >
-      <div
-        className="container"
-        style={{
-          height: "100px",
-          width: "100%",
-          padding: "0 5%",
-        }}
-      >
-        <a href="/" className="brand-logo left">
-          <img
-            src="/images/logo.png"
-            alt="logo"
-            style={{ height: "80px", marginTop: "10px" }}
-          />
+    <nav className="nav-bar">
+      <div className="nav-container">
+        {isSmallScreen && (
+          <div className="hamburger" onClick={toggleMenu}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        )}
+
+        <a href="/" className="brand-logo">
+          <img src="/images/logo.png" alt="logo" />
         </a>
 
-        <ul className="right">
+        <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
           {(!user || user.type === 1) && (
             <li>
-              <a
-                style={{
-                  height: "100px",
-                  color: "#333",
-                  alignContent: "center",
-                }}
-                href="/"
-              >
-                Jobs
-              </a>
+              <a href="/">Jobs</a>
             </li>
           )}
           {user?.type === 0 && (
             <li>
-              <a
-                href="/"
-                style={{
-                  height: "100px",
-                  color: "#333",
-                  alignContent: "center",
-                }}
-              >
-                Created positions
-              </a>
+              <a href="/">Created positions</a>
             </li>
           )}
           {user && (
             <li>
-              <a
-                href="/"
-                style={{
-                  height: "100px",
-                  color: "#333",
-                  alignContent: "center",
-                }}
-                className="valign-wrapper"
-              >
+              <a href="/" className="valign-wrapper">
                 <i className="material-icons">account_circle</i>
                 &nbsp;My Profile
               </a>
             </li>
           )}
           {!user && (
-            <li
-              style={{
-                height: "100px",
-                alignContent: "center",
-                padding: "0 1rem",
-                color: "white",
-              }}
-            >
+            <li>
               <button
                 id="loginBtn"
                 className="btn-small indigo lighten-2"
@@ -98,14 +70,7 @@ export default function Header() {
             </li>
           )}
           {user && (
-            <li
-              style={{
-                height: "100px",
-                alignContent: "center",
-                padding: "0 1rem",
-                color: "white",
-              }}
-            >
+            <li>
               <button
                 id="logoutBtn"
                 className="btn-small indigo lighten-2"

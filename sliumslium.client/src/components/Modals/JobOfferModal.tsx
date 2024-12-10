@@ -314,7 +314,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
                       onChange={(e) => handleJobPartChange(index, e)}
                       required
                     />
-                    <label htmlFor="name">Part Name</label>
+                    <label htmlFor="name">Title</label>
                   </div>
                   <div className="input-field">
                     <textarea
@@ -324,7 +324,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
                       className="materialize-textarea"
                       required
                     />
-                    <label htmlFor="description">Part Description</label>
+                    <label htmlFor="description">Description</label>
                   </div>
                   <div className="row">
                     <span>

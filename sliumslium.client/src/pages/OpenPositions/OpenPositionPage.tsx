@@ -32,12 +32,6 @@ export default function OpenPositionPage() {
               <h4>{offer.name}</h4>
               <p>{offer.companyName}</p>
               <p style={{ margin: "0 2rem 0 0" }}>{offer.description}</p>
-              <button className="btn-flat" style={{ margin: "2rem 0 0" }}>
-                <div className="valign-wrapper">
-                  Remove position &nbsp;
-                  <i className="tiny material-icons">close</i>
-                </div>
-              </button>
             </div>
 
             <div className="col s12 m6 l5">

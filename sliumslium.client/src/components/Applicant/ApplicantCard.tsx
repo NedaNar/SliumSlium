@@ -102,7 +102,7 @@ export default function ApplicantCard({ applicant, offer }: ApplicantProps) {
             </h6>
           </div>
 
-          <i className="material-icons arrow-icon">
+          <i className="material-icons arrow-icon-appl">
             {expanded ? "keyboard_arrow_up" : "keyboard_arrow_down"}
           </i>
         </div>
@@ -116,7 +116,7 @@ export default function ApplicantCard({ applicant, offer }: ApplicantProps) {
               borderRadius: "4px",
             }}
           >
-            <div className="col s6">
+            <div className="col s12 m6">
               <p style={{ margin: "0 0 2rem 0" }}>APPLICATION INFO</p>
 
               <div className="row" style={{ margin: 0 }}>
@@ -167,7 +167,7 @@ export default function ApplicantCard({ applicant, offer }: ApplicantProps) {
               </button>
             </div>
 
-            <div className="col s6" style={{ padding: "0 0 0 2rem" }}>
+            <div className="col s12 m6 applicant-contacts">
               <p style={{ margin: "0 0 0.6rem" }}>CONTACTS</p>
               <div className="valign-wrapper">
                 <i className="material-icons tiny">email</i>&nbsp;

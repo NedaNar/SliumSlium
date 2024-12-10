@@ -90,13 +90,12 @@ export default function Filters({ onFilterChange }: FiltersProps) {
       }}
     >
       <div>
-        <div className="row" style={{ display: "flex" }}>
+        <div className="row">
           <div
+            className="col s12 m8"
             style={{
-              flex: 1,
               display: "flex",
               alignItems: "center",
-              marginRight: "48px",
             }}
           >
             <i className="material-icons" style={{ marginRight: "16px" }}>
@@ -109,7 +108,13 @@ export default function Filters({ onFilterChange }: FiltersProps) {
               onChange={(e) => setNameDescription(e.target.value)}
             />
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            className="col s12 m4"
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <button
               className="btn indigo lighten-1"
               onClick={handleApplyFilters}
@@ -127,11 +132,11 @@ export default function Filters({ onFilterChange }: FiltersProps) {
         </div>
 
         {moreFilters && (
-          <div className="row">
-            <div className="row">
+          <div className="row" style={{ margin: 0 }}>
+            <div className="row" style={{ margin: 0 }}>
               <div
                 className="row valign-wrapper input-field col s6"
-                style={{ padding: "0 18px" }}
+                style={{ padding: "0 2%" }}
               >
                 <input
                   id="location"
@@ -144,7 +149,7 @@ export default function Filters({ onFilterChange }: FiltersProps) {
 
               <div
                 className="row valign-wrapper input-field col s6"
-                style={{ padding: "0 18px" }}
+                style={{ padding: "0 2%" }}
               >
                 <input
                   id="company"
@@ -155,8 +160,11 @@ export default function Filters({ onFilterChange }: FiltersProps) {
                 <label htmlFor="company">Company</label>
               </div>
             </div>
-            <div className="row">
-              <div className="input-field col s4" style={{ padding: "0 18px" }}>
+            <div className="row" style={{ margin: 0 }}>
+              <div
+                className="input-field col s12 m4"
+                style={{ padding: "0 2%" }}
+              >
                 <select
                   value={experience}
                   onChange={(e) => setExperience(e.target.value)}
@@ -170,7 +178,10 @@ export default function Filters({ onFilterChange }: FiltersProps) {
                 <label>Experience</label>
               </div>
 
-              <div className="input-field col s4" style={{ padding: "0 18px" }}>
+              <div
+                className="input-field col s12 m4"
+                style={{ padding: "0 2%" }}
+              >
                 <select
                   value={workEnvironment}
                   onChange={(e) => setWorkEnvironment(e.target.value)}
@@ -184,7 +195,10 @@ export default function Filters({ onFilterChange }: FiltersProps) {
                 <label>Work environment</label>
               </div>
 
-              <div className="input-field col s4" style={{ padding: "0 18px" }}>
+              <div
+                className="input-field col s12 m4"
+                style={{ padding: "0 2%" }}
+              >
                 <select
                   value={partTime}
                   onChange={(e) => setPartTime(e.target.value)}
