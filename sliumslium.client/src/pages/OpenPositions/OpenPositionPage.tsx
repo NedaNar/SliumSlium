@@ -1,5 +1,5 @@
-import { useLocation } from "react-router";
-import { Applicant } from "../../api/apiModel";
+import { useParams } from "react-router";
+import { Applicant, JobOffer } from "../../api/apiModel";
 import useFetch from "../../api/useDataFetching";
 import ApplicantCard from "../../components/Applicant/ApplicantCard";
 import ApplicantFilters from "../../components/Applicant/ApplicantFilters";
@@ -7,21 +7,22 @@ import { useEffect, useState } from "react";
 import JobInformation from "../../components/JobOffer/JobInformation";
 
 export default function OpenPositionPage() {
-  const location = useLocation();
-  const offer = location.state?.offer;
+  const { offerId } = useParams();
   const [applicants, setApplicants] = useState<Applicant[]>([]);
 
-  const { data } = useFetch<Applicant[]>(
-    `JobOffer/${offer.id_JobOffer}/applicants`
+  const { data: offer } = useFetch<JobOffer | null>(`JobOffer/${offerId}`);
+
+  const { data: applicantData } = useFetch<Applicant[]>(
+    `JobOffer/${offerId}/applicants`
   );
 
-  const handleFilterChange = (data: Applicant[]) => {
-    setApplicants(data);
+  const handleFilterChange = (applicantData: Applicant[]) => {
+    setApplicants(applicantData);
   };
 
   useEffect(() => {
-    if (data) setApplicants(data);
-  }, [data]);
+    if (applicantData) setApplicants(applicantData);
+  }, [applicantData]);
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function OpenPositionPage() {
               Applicants ({applicants?.length})
             </h5>
             <ApplicantFilters
-              offerId={offer.id_JobOffer}
+              offerId={Number(offerId)}
               onFilterChange={handleFilterChange}
             />
             {applicants &&

@@ -20,7 +20,10 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/job-position/:id" element={<OpenPositionPage />} />
+            <Route
+              path="/job-position/:offerId"
+              element={<OpenPositionPage />}
+            />
             <Route path="/job-offer/:id" element={<JobOfferPage />} />
             <Route path="/applicant/:id" element={<ApplicantPage />} />
             <Route

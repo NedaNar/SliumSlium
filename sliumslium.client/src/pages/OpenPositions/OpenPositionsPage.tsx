@@ -49,9 +49,7 @@ export default function OpenPositionsPage() {
               key={index}
               offer={offer}
               handleCardClick={() => {
-                navigate(`/job-position/${offer.id_JobOffer}`, {
-                  state: { offer },
-                });
+                navigate(`/job-position/${offer.id_JobOffer}`);
               }}
             />
           ))}
