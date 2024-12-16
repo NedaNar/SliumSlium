@@ -35,7 +35,20 @@
   margin-bottom: 0.5rem;
 }
 
-@media (max-width: 600px) {
+.modal--center {
+  text-align: center;
+}
+
+.modal__closeBtn {
+  margin: 0;
+}
+
+.modal__title {
+  font-size: 1.2rem;
+  padding: 1rem 0;
+}
+
+@media (max-width: 900px) {
   .large-modal {
     width: 100% !important ;
     height: 100% !important;

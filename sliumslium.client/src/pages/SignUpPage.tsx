@@ -26,10 +26,8 @@ export default function SignUpPage() {
 
   return (
     <div className="container center-align">
-      <div className="card" style={{ padding: "2rem", marginTop: "2rem" }}>
-        <h4 className="center-align" style={{ margin: "1rem 0 3rem" }}>
-          Sign in
-        </h4>
+      <div className="card signUp__box">
+        <h4 className="center-align signUp__title">Sign in</h4>
         <div className="tab">
           <button
             className={`tab-link ${role === 1 ? "active" : ""}`}
@@ -84,10 +82,7 @@ export default function SignUpPage() {
               <label htmlFor="password">Password</label>
             </div>
 
-            <button
-              className="btn-large indigo lighten-1 signUpButton"
-              type="submit"
-            >
+            <button className="btn-large indigo signUpButton" type="submit">
               Sign in
               <i className="material-icons right">send</i>
             </button>
@@ -95,20 +90,13 @@ export default function SignUpPage() {
         </div>
       </div>
 
-      <div
-        className="indigo lighten-5"
-        style={{
-          margin: "1.8rem 0 0",
-          padding: "0.8rem 0 1.6rem",
-          borderRadius: "4px",
-        }}
-      >
-        <p style={{ fontSize: "1.2rem" }}>
+      <div className="indigo lighten-5 signUp__login">
+        <p className="signUp_text">
           <strong>Already have an account?</strong>
         </p>
         <button
           onClick={() => navigate("/signup")}
-          className="btn indigo lighten-2"
+          className="btn indigo lighten-1"
         >
           Log in
         </button>

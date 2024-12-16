@@ -31,14 +31,12 @@ export default function JobOfferCard({
   return (
     <div className="card job-offer-card" onClick={handleCardClick}>
       <div
-        className={`row ${isSmallScreen ? "" : "valign-wrapper"}`}
-        style={{ padding: "0.5rem 2rem" }}
+        className={`row ${
+          isSmallScreen ? "" : "valign-wrapper"
+        } jobOfferCard__box`}
       >
         <div className={`${isSmallScreen ? "row" : "col s6"}`}>
-          <h5
-            className="card-title valign-wrapper"
-            style={{ fontSize: isSmallScreen ? "1.4rem" : "1.6rem" }}
-          >
+          <p className="card-title valign-wrapper jobOfferCard__title">
             {offer.name}
             {user?.type === 1 &&
               userJobOffers &&
@@ -47,18 +45,7 @@ export default function JobOfferCard({
               ) && (
                 <>
                   {!isSmallScreen && (
-                    <span
-                      style={{
-                        backgroundColor: "#b2d8d8",
-                        fontSize: "1rem",
-                        padding: "0.1rem 0.6rem",
-                        borderRadius: "4px",
-                        color: "#004c4c ",
-                        marginLeft: "1rem",
-                      }}
-                    >
-                      Applied
-                    </span>
+                    <span className="jobOfferCard__appl">Applied</span>
                   )}
                   {isSmallScreen && (
                     <i
@@ -70,28 +57,22 @@ export default function JobOfferCard({
                   )}
                 </>
               )}
-          </h5>
-          <h6 className="card-subtitle">
+          </p>
+          <p className="card-subtitle">
             {user?.type === 0
               ? `Valid until ${format(new Date(offer.validDate), "yyyy-MM-dd")}`
               : offer.companyName}
-          </h6>
+          </p>
         </div>
 
         {(user?.type === 1 || !isSmallScreen) && (
           <div
             className={`${user?.type === 1 ? "indigo lighten-5" : ""} ${
               isSmallScreen ? "row" : "col s3 right"
-            }`}
-            style={{
-              padding: "1rem 1.5rem",
-              borderRadius: "4px",
-              maxWidth: "300px",
-              margin: isSmallScreen ? "0 1.5rem 1rem 0" : "0 20px",
-            }}
+            } jobOfferCard__salary`}
           >
             {user?.type === 1 && (
-              <p style={{ fontSize: "1.1rem", margin: "0" }}>
+              <p className="jobOfferCard__salaryText">
                 From <strong>{offer.salary} €</strong>/month
               </p>
             )}{" "}

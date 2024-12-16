@@ -1,0 +1,26 @@
+.login__box {
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.login__title {
+  margin: 1rem 0 3rem;
+}
+
+.login__email {
+  margin: 0 0 2rem;
+}
+
+.login__password {
+  margin: 0 0 3rem;
+}
+
+.login__signUp {
+  font-size: 1.2rem;
+}
+
+.login__noAccount {
+  margin: 1.8rem 0 0;
+  padding: 0.8rem 0 1.6rem;
+  border-radius: 4px;
+}

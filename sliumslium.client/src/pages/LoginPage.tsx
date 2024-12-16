@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../context/UserContext";
+import "./loginPage.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -16,13 +17,11 @@ export default function LoginPage() {
 
   return (
     <div className="container center-align">
-      <div className="card" style={{ padding: "2rem", marginTop: "2rem" }}>
-        <h4 className="center-align" style={{ margin: "1rem 0 3rem" }}>
-          Log in
-        </h4>
+      <div className="card login__box">
+        <h4 className="center-align">Log in</h4>
         <div>
           <form onSubmit={handleSubmit}>
-            <div className="input-field" style={{ margin: "0 0 2rem" }}>
+            <div className="input-field login__email">
               <input
                 id="email"
                 type="email"
@@ -33,7 +32,7 @@ export default function LoginPage() {
               />
               <label htmlFor="email">Email</label>
             </div>
-            <div className="input-field" style={{ margin: "0 0 3rem" }}>
+            <div className="input-field login__password">
               <input
                 id="password"
                 type="password"
@@ -44,27 +43,20 @@ export default function LoginPage() {
               />
               <label htmlFor="password">Password</label>
             </div>
-            <button className="btn-large indigo lighten-1" type="submit">
+            <button className="btn-large indigo" type="submit">
               Login
               <i className="material-icons right">send</i>
             </button>
           </form>
         </div>
       </div>
-      <div
-        className="indigo lighten-5"
-        style={{
-          margin: "1.8rem 0 0",
-          padding: "0.8rem 0 1.6rem",
-          borderRadius: "4pz",
-        }}
-      >
-        <p style={{ fontSize: "1.2rem" }}>
+      <div className="indigo lighten-5 login__signUp">
+        <p className="login__noAccount">
           <strong>Don't have an account yet?</strong>
         </p>
         <button
           onClick={() => navigate("/signup")}
-          className="btn indigo lighten-2"
+          className="btn indigo lighten-1"
         >
           Sign up
         </button>

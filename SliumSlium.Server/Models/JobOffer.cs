@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace SliumSlium.Server.Models
+﻿namespace SliumSlium.Server.Models
 {
     public class JobOffer
     {

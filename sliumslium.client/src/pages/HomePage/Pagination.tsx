@@ -23,7 +23,7 @@ export default function Pagination({ jobOffers }: PaginationProps) {
 
   return (
     <>
-      <div className="job-offers-list" style={{ marginTop: "2rem" }}>
+      <div className="job-offers-list pagination__box">
         {currentJobs.map((offer) => (
           <JobOfferCard
             key={offer.id_JobOffer}

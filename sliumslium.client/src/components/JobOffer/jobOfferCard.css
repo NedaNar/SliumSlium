@@ -1,8 +1,8 @@
 .job-offer-card {
   transition: transform 0.3s ease;
-  width: "100%";
-  position: "relative";
-  cursor: "pointer";
+  width: 100%;
+  position: relative;
+  cursor: pointer;
 }
 
 .job-offer-card:hover {
@@ -23,7 +23,36 @@
   opacity: 1;
 }
 
-@media (max-width: 768px) {
+.jobOfferCard__box {
+  padding: 0.5rem 2rem;
+}
+
+.jobOfferCard__title {
+  font-size: 1.6rem;
+}
+
+.jobOfferCard__appl {
+  background-color: #b2d8d8;
+  font-size: 1rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 4px;
+  color: #004c4c;
+  margin-left: 1rem;
+}
+
+.jobOfferCard__salary {
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  max-width: 300px;
+  margin: 0 20px;
+}
+
+.jobOfferCard__salaryText {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
   .job-offer-card {
     transition: none;
   }
@@ -36,5 +65,13 @@
     transition: none;
     font-size: 20px;
     opacity: 1;
+  }
+
+  .jobOfferCard__title {
+    font-size: 1.4rem;
+  }
+
+  .jobOfferCard__salary {
+    margin: 0 1.5rem 1rem 0;
   }
 }

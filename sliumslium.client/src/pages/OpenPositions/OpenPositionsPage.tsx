@@ -30,12 +30,9 @@ export default function OpenPositionsPage() {
     <>
       <div>
         <h1 className="openPositions_header">Created Positions</h1>
-        <h6 style={{ textAlign: "center", marginBottom: "3rem" }}>
-          {user?.name}
-        </h6>
+        <h2 className="openPositions__user">{user?.name}</h2>
         <button
-          className="btn-large indigo"
-          style={{ margin: "0 0 1rem" }}
+          className="btn-large indigo openPositions__addBtn"
           onClick={() => setModalOpen(true)}
         >
           <div className="valign-wrapper">

@@ -3,6 +3,7 @@ import { STATUS_OPTIONS } from "../../utils/enumUtils";
 import M from "materialize-css";
 import axios from "axios";
 import { toastError } from "../../utils/toastUtils";
+import "./applicantFilters.css";
 
 interface ApplicantFiltersProps {
   offerId: number;
@@ -73,16 +74,9 @@ export default function ApplicantFilters({
   };
 
   return (
-    <div
-      className="grey lighten-4"
-      style={{
-        padding: "0.5rem 2% 0.5rem",
-        margin: "2rem 0",
-        borderRadius: "8px",
-      }}
-    >
+    <div className="grey lighten-4 appFilters">
       <div>
-        <div className="valign-wrapper" style={{ flexWrap: "wrap" }}>
+        <div className="valign-wrapper appFilters__box">
           <div className="col s12 m4">
             <input
               type="text"
@@ -92,7 +86,7 @@ export default function ApplicantFilters({
             />
           </div>
 
-          <div className="input-field col s12 m4" style={{ padding: "0 8px" }}>
+          <div className="input-field col s12 m4 appFilters__status">
             <select
               multiple
               value={selectedStatuses}
@@ -115,9 +109,8 @@ export default function ApplicantFilters({
               Search
             </button>
             <button
-              className="btn-flat"
+              className="btn-flat appFilters__clear"
               onClick={handleClearFilters}
-              style={{ margin: "0 0 0 0.5rem" }}
             >
               Clear
             </button>

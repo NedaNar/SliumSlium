@@ -30,3 +30,7 @@ tr:nth-child(odd) {
   background-color: #1976d2;
   color: white;
 }
+
+.pagination__box {
+  margin-top: "2rem";
+}

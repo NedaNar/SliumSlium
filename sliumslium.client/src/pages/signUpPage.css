@@ -43,9 +43,28 @@
 }
 
 .input-field {
-  margin: "0 0 2rem";
+  margin: 0 0 2rem;
 }
 
 .signUpButton {
   margin-top: 2rem;
+}
+
+.signUp__box {
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.signUp__title {
+  margin: 1rem 0 3rem;
+}
+
+.signUp__login {
+  margin: 1.8rem 0 0;
+  padding: 0.8rem 0 1.6rem;
+  border-radius: 4px;
+}
+
+.signUp__text {
+  font-size: 1.2rem;
 }

@@ -3,6 +3,7 @@ import useFetch from "../../api/useDataFetching";
 import Filters from "../HomePage/Filters";
 import { useState } from "react";
 import Pagination from "../HomePage/Pagination";
+import "./jobOffersPage.css";
 
 export default function JobOffersPage() {
   const { data } = useFetch<JobOffer[]>("JobOffer");
@@ -11,13 +12,11 @@ export default function JobOffersPage() {
   return (
     <>
       <div>
-        <h1 style={{ textAlign: "center", marginBottom: "3rem" }}>
-          Job Offers
-        </h1>
+        <h1 className="jobOffersPage__title">Job Offers</h1>
         <Filters
           onFilterChange={(filteredData) => setJobOffers(filteredData)}
         />
-        <div className="job-offers-list" style={{ marginTop: "2rem" }}>
+        <div className="jobOffersPage__box">
           {jobOffers.length > 0 ? (
             <Pagination jobOffers={jobOffers} />
           ) : (

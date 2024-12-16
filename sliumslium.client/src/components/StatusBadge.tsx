@@ -4,6 +4,7 @@ import {
   getBadgeColor,
   getBadgeTooltip,
 } from "../utils/colorUtils";
+import "./statusBadge.css";
 
 interface StatusBadgeProps {
   status: string;
@@ -31,16 +32,11 @@ export const StatusBadge = ({ status, showTooltip }: StatusBadgeProps) => {
 
   return (
     <span
-      className="tooltipped"
+      className="tooltipped statusBadge"
       data-tooltip={getBadgeTooltip(status)}
       style={{
         backgroundColor: getBadgeBackground(status),
-        fontSize: "1rem",
-        padding: "0.2rem 0.6rem",
-        borderRadius: "4px",
         color: getBadgeColor(status),
-        marginLeft: "1rem",
-        cursor: "pointer",
       }}
     >
       {isSmallScreen ? "" : "Application"} {status}

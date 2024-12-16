@@ -88,18 +88,18 @@ export default function ApplicantCard({ applicant, offer }: ApplicantProps) {
           style={{ cursor: "pointer" }}
         >
           <div className="col s12" style={{ padding: "1rem 2rem 1rem" }}>
-            <h5
+            <h1
               className="card-title"
               style={{ fontSize: "1.3rem", margin: "0" }}
             >
               {applicant.name}
-            </h5>
-            <h6
+            </h1>
+            <h2
               className="card-subtitle"
               style={{ fontSize: "1rem", margin: "0.5rem 0 0" }}
             >
               Application date: {applicant.date}
-            </h6>
+            </h2>
           </div>
 
           <i className="material-icons arrow-icon-appl">
@@ -159,7 +159,7 @@ export default function ApplicantCard({ applicant, offer }: ApplicantProps) {
               </div>
 
               <button
-                className="btn-small indigo lighten-2"
+                className="btn-small indigo lighten-1"
                 onClick={handleApplicantUpdate}
                 disabled={!updated}
               >
@@ -188,7 +188,7 @@ export default function ApplicantCard({ applicant, offer }: ApplicantProps) {
               {file && (
                 <a
                   href={file.filePath}
-                  className="btn-small indigo lighten-2"
+                  className="btn-small indigo lighten-1"
                   style={{ marginTop: "0.7rem" }}
                 >
                   <div className="valign-wrapper">

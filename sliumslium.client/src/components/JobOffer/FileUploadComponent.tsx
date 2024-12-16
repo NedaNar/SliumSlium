@@ -8,6 +8,7 @@ import {
   uploadFileToCloudinary,
 } from "../../utils/fileUploadUtils";
 import { toastError, toastSuccess } from "../../utils/toastUtils";
+import "./fileUploadComponent.css";
 
 interface FileUploadComponentProps {
   partId: number;
@@ -78,17 +79,7 @@ export default function FileUploadComponent({
 
   return (
     <div className="file-dropzone">
-      <div
-        {...getRootProps({
-          className: "dropzone",
-          style: {
-            border: "2px dashed #ccc",
-            padding: "1rem",
-            textAlign: "center",
-            marginTop: "1rem",
-          },
-        })}
-      >
+      <div {...getRootProps({ className: "dropzone" })}>
         <input {...getInputProps()} />
         <p>
           {selectedFile
@@ -99,7 +90,7 @@ export default function FileUploadComponent({
 
       {selectedFile && (
         <>
-          <div className="valign-wrapper" style={{ marginTop: "1rem" }}>
+          <div className="valign-wrapper dropzone__file">
             <span>
               {selectedFile.name} - {selectedFile.size} bytes
             </span>
@@ -110,7 +101,7 @@ export default function FileUploadComponent({
           <button
             disabled={uploading}
             onClick={handleFileUpload}
-            className="btn indigo lighten-2"
+            className="btn indigo lighten-1"
           >
             {uploading ? "Uploading..." : "Submit"}
           </button>

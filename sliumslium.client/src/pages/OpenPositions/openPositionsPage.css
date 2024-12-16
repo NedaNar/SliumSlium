@@ -2,8 +2,36 @@
   text-align: center;
 }
 
+.openPositions__user {
+  text-align: center;
+  margin: 0 0 3rem;
+  font-size: 1.4rem;
+}
+
+.openPositions__addBtn {
+  margin: 0 0 1rem;
+}
+
 @media (max-width: 600px) {
   .openPositions_header {
     font-size: 2.5rem;
   }
+}
+
+.openPosition__box {
+  margin-top: 2rem;
+  padding: 0;
+}
+
+.openPosition__desc {
+  margin: 0 2rem 0 0;
+}
+
+.openPosition__offer {
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+}
+
+.openPosition__appl {
+  margin: 4rem 0 2rem;
 }

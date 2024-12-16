@@ -4,6 +4,7 @@ import { UserContext } from "../../context/UserContext";
 import useDelayedFetch from "../../api/useDelayedDataFetching";
 import { format } from "date-fns";
 import FileUploadComponent from "./FileUploadComponent";
+import "./jobOfferPart.css";
 
 interface JobPartProps {
   part: JobPart;
@@ -70,12 +71,12 @@ export default function JobOfferPart({
     <ul className="collapsible" id={`collapsible${part.id_Part?.toString()}`}>
       <li>
         <div
-          className="collapsible-header"
+          className={`collapsible-header ${
+            applied && isCurrent
+              ? "jobOfferPart--enabled"
+              : "jobOfferPart--disabled"
+          }`}
           onClick={handleCollapsibleClick}
-          style={{
-            cursor: applied && isCurrent ? "pointer" : "not-allowed",
-            opacity: applied && isCurrent ? 1 : 0.5,
-          }}
         >
           {!currentPart ||
             (partNumber >= currentPart && isCollapsed && (
@@ -106,7 +107,7 @@ export default function JobOfferPart({
             <>
               <div className="valign-wrapper">
                 <i className="material-icons green-text">check_circle</i>&nbsp;
-                <p style={{ fontSize: "1.2rem" }}>Your file was submitted!</p>
+                <p className="jobOfferPart__text">Your file was submitted!</p>
               </div>
               <p>
                 Upload date:{" "}

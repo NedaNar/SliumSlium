@@ -1,0 +1,18 @@
+.appFilters {
+  padding: 2rem 2% 0.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+}
+
+.appFilters__box {
+  flex-wrap: "wrap";
+}
+
+.appFilters__status {
+  margin: 0;
+  padding: 0 8px;
+}
+
+.appFilters__clear {
+  margin: 0 0 0 0.5rem;
+}

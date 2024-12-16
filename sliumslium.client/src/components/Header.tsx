@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router";
 import "./header.css";
@@ -6,34 +6,20 @@ import "./header.css";
 export default function Header() {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 900);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const handleResize = () => {
-    setIsSmallScreen(window.innerWidth < 900);
-  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <nav className="nav-bar">
       <div className="nav-container">
-        {isSmallScreen && (
-          <div className="hamburger" onClick={toggleMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        )}
+        <div className="hamburger" onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
         <a href="/" className="brand-logo">
           <img src="/images/logo.png" alt="logo" />
@@ -45,14 +31,12 @@ export default function Header() {
               <a href="/">Jobs</a>
             </li>
           )}
-          {user?.type === 0 && (
-            <li>
-              <a href="/">Created positions</a>
-            </li>
-          )}
           {user && (
             <li>
-              <a href="/" className="valign-wrapper">
+              <a
+                href={user.type === 1 ? `/applicant/${user.id_User}` : "/"}
+                className="valign-wrapper"
+              >
                 <i className="material-icons">account_circle</i>
                 &nbsp;My Profile
               </a>
@@ -62,7 +46,7 @@ export default function Header() {
             <li>
               <button
                 id="loginBtn"
-                className="btn-small indigo lighten-2"
+                className="btn-small indigo lighten-1"
                 onClick={() => navigate("/login")}
               >
                 Login
@@ -73,7 +57,7 @@ export default function Header() {
             <li>
               <button
                 id="logoutBtn"
-                className="btn-small indigo lighten-2"
+                className="btn-small indigo lighten-1"
                 onClick={logout}
               >
                 Logout

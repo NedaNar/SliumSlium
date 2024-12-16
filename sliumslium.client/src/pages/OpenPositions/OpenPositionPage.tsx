@@ -5,6 +5,7 @@ import ApplicantCard from "../../components/Applicant/ApplicantCard";
 import ApplicantFilters from "../../components/Applicant/ApplicantFilters";
 import { useEffect, useState } from "react";
 import JobInformation from "../../components/JobOffer/JobInformation";
+import "./openPositionsPage.css";
 
 export default function OpenPositionPage() {
   const { offerId } = useParams();
@@ -27,26 +28,23 @@ export default function OpenPositionPage() {
   return (
     <>
       {offer && (
-        <div className="container" style={{ marginTop: "2rem", padding: 0 }}>
+        <div className="container openPosition__box">
           <div className="row">
             <div className="col s12 m6 l7">
               <h4>{offer.name}</h4>
               <p>{offer.companyName}</p>
-              <p style={{ margin: "0 2rem 0 0" }}>{offer.description}</p>
+              <p className="openPosition__desc">{offer.description}</p>
             </div>
 
             <div className="col s12 m6 l5">
-              <div
-                className="card"
-                style={{ padding: "1rem 2rem", marginTop: "2rem" }}
-              >
+              <div className="card openPosition__offer">
                 <JobInformation offer={offer} />
               </div>
             </div>
           </div>
 
           <div className="row">
-            <h5 style={{ margin: "4rem 0 2rem" }}>
+            <h5 className="openPosition__appl">
               Applicants ({applicants?.length})
             </h5>
             <ApplicantFilters

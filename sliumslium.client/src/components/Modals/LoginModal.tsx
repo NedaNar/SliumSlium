@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import "./modal.css";
 
 interface ModalProps {
   isOpen: boolean;
@@ -21,11 +22,8 @@ export const LoginModal = ({ isOpen, onClose }: ModalProps) => {
   }, [isOpen]);
 
   return (
-    <div
-      className={`modal ${isOpen ? "open" : ""}`}
-      style={{ textAlign: "center" }}
-    >
-      <div className="row" style={{ margin: 0 }}>
+    <div className={`modal ${isOpen ? "open" : ""} modal--center`}>
+      <div className="row modal__closeBtn">
         <button className="modal-close btn-flat right" onClick={onClose}>
           <i className="material-icons">close</i>
         </button>
@@ -33,10 +31,7 @@ export const LoginModal = ({ isOpen, onClose }: ModalProps) => {
       <div className="modal-content">
         <h4>Login Required</h4>
         <p>You need to log in to apply for this job.</p>
-        <button
-          className="btn indigo lighten-1"
-          onClick={() => navigate("/login")}
-        >
+        <button className="btn indigo" onClick={() => navigate("/login")}>
           Login
         </button>
       </div>

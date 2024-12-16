@@ -201,6 +201,21 @@ namespace SliumSlium.Server.Controllers
             return Ok(jobOffer.Parts);
         }
 
+
+        [HttpGet("applicant/{id}")]
+        public async Task<ActionResult<IEnumerable<JobOffer>>> GetJobOffersUserAppliedToAsync(int id)
+        {
+            var jobOffers = await _context.JobOffer
+                .Where(jobOffer => _context.UserJobOffer
+                    .Any(userJobOffer => userJobOffer.Fk_JobOfferid_JobOffer == jobOffer.Id_JobOffer &&
+                                         userJobOffer.Fk_Userid_User == id))
+                .Include(j => j.Parts)
+                .OrderByDescending(j => j.CreationDate)
+                .ToListAsync();
+
+            return Ok(jobOffers);
+        }
+
         [HttpPost]
         public async Task<ActionResult<JobOffer>> CreateJobOffer([FromBody] JobOffer jobOffer)
         {

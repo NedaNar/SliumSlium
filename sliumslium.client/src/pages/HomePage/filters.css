@@ -1,0 +1,39 @@
+.filters__box {
+  padding: 1rem 10% 0.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+}
+
+.filters__search {
+  margin-right: 16px;
+}
+
+.filters__searchBtn {
+  display: flex;
+  align-items: center;
+}
+
+.filters__clearBtn {
+  margin: 0 0 0 1rem;
+}
+
+.filters__row {
+  margin: 0;
+}
+
+.filters__input {
+  padding: 0 2%;
+}
+
+.filters__wrapper {
+  justify-content: center;
+}
+
+.filters__moreBtn {
+  display: flex;
+  align-items: center;
+}
+
+.filters__moreIcon {
+  margin: 0 0.6rem;
+}

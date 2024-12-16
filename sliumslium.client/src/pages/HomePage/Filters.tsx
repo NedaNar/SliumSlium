@@ -6,6 +6,7 @@ import {
 } from "../../utils/enumUtils";
 import M from "materialize-css";
 import { toastError } from "../../utils/toastUtils";
+import "./filters.css";
 
 interface FiltersProps {
   onFilterChange: (filters: any) => void;
@@ -81,14 +82,7 @@ export default function Filters({ onFilterChange }: FiltersProps) {
   };
 
   return (
-    <div
-      className="grey lighten-4"
-      style={{
-        padding: "1rem 10% 0.5rem",
-        margin: "2rem 0",
-        borderRadius: "8px",
-      }}
-    >
+    <div className="grey lighten-4 filters__box">
       <div>
         <div className="row">
           <div
@@ -98,9 +92,7 @@ export default function Filters({ onFilterChange }: FiltersProps) {
               alignItems: "center",
             }}
           >
-            <i className="material-icons" style={{ marginRight: "16px" }}>
-              search
-            </i>
+            <i className="material-icons filters__search">search</i>
             <input
               type="text"
               placeholder="Search"
@@ -108,23 +100,13 @@ export default function Filters({ onFilterChange }: FiltersProps) {
               onChange={(e) => setNameDescription(e.target.value)}
             />
           </div>
-          <div
-            className="col s12 m4"
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <button
-              className="btn indigo lighten-1"
-              onClick={handleApplyFilters}
-            >
+          <div className="col s12 m4 filters__searchBtn">
+            <button className="btn indigo" onClick={handleApplyFilters}>
               Search
             </button>
             <button
-              className="btn indigo lighten-2"
+              className="btn indigo lighten-1 filters__clearBtn"
               onClick={handleClearFilters}
-              style={{ margin: "0 0 0 1rem" }}
             >
               Clear filters
             </button>
@@ -132,8 +114,8 @@ export default function Filters({ onFilterChange }: FiltersProps) {
         </div>
 
         {moreFilters && (
-          <div className="row" style={{ margin: 0 }}>
-            <div className="row" style={{ margin: 0 }}>
+          <div className="row filters__row">
+            <div className="row filters__row">
               <div
                 className="row valign-wrapper input-field col s6"
                 style={{ padding: "0 2%" }}
@@ -160,11 +142,8 @@ export default function Filters({ onFilterChange }: FiltersProps) {
                 <label htmlFor="company">Company</label>
               </div>
             </div>
-            <div className="row" style={{ margin: 0 }}>
-              <div
-                className="input-field col s12 m4"
-                style={{ padding: "0 2%" }}
-              >
+            <div className="row filters__row">
+              <div className="input-field col s12 m4 filters__input">
                 <select
                   value={experience}
                   onChange={(e) => setExperience(e.target.value)}
@@ -178,10 +157,7 @@ export default function Filters({ onFilterChange }: FiltersProps) {
                 <label>Experience</label>
               </div>
 
-              <div
-                className="input-field col s12 m4"
-                style={{ padding: "0 2%" }}
-              >
+              <div className="input-field col s12 m4 filters__input">
                 <select
                   value={workEnvironment}
                   onChange={(e) => setWorkEnvironment(e.target.value)}
@@ -195,10 +171,7 @@ export default function Filters({ onFilterChange }: FiltersProps) {
                 <label>Work environment</label>
               </div>
 
-              <div
-                className="input-field col s12 m4"
-                style={{ padding: "0 2%" }}
-              >
+              <div className="input-field col s12 m4 filters__input">
                 <select
                   value={partTime}
                   onChange={(e) => setPartTime(e.target.value)}
@@ -215,21 +188,15 @@ export default function Filters({ onFilterChange }: FiltersProps) {
           </div>
         )}
 
-        <div
-          className="valign-wrapper"
-          style={{
-            justifyContent: "center",
-          }}
-        >
+        <div className="valign-wrapper filters__wrapper">
           <button
-            className="btn-flat"
-            style={{ display: "flex", alignItems: "center" }}
+            className="btn-flat filters__moreBtn"
             onClick={() => setMoreFilters((prev) => !prev)}
           >
             {!moreFilters && (
               <>
                 <span>More filters</span>
-                <i style={{ margin: "0 0.6rem" }} className="material-icons">
+                <i className="material-icons filters__moreIcon">
                   keyboard_arrow_down
                 </i>
               </>
@@ -237,7 +204,7 @@ export default function Filters({ onFilterChange }: FiltersProps) {
             {moreFilters && (
               <>
                 <span>Hide filters</span>
-                <i style={{ margin: "0 0.6rem" }} className="material-icons">
+                <i className="material-icons filters__moreIcon">
                   keyboard_arrow_up
                 </i>
               </>

@@ -1,0 +1,28 @@
+.applPage__personalInfo {
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+}
+
+.applPage__personalTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.applPage__personalRow {
+  margin: 0.5rem 0;
+}
+
+.applPage__text {
+  margin: 0 0 0 0.5rem;
+}
+
+.applPage__applTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+.applPage__title {
+  font-size: 2.2rem;
+  margin: 3rem 0;
+}

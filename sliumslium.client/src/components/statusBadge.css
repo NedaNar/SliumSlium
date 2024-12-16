@@ -1,0 +1,7 @@
+.statusBadge {
+  font-size: 1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  margin-left: 1rem;
+  cursor: pointer;
+}

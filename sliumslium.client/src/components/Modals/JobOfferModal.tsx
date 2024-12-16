@@ -195,7 +195,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
         <form onSubmit={handleSubmit}>
           {currentPart === 0 && (
             <>
-              <h6 className="dialogSubtitle">Main information</h6>
+              <h1 className="modal__title">Main information</h1>
               <div className="input-field">
                 <input
                   name="validDate"
@@ -245,7 +245,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
 
           {currentPart === 1 && (
             <>
-              <h6 className="dialogSubtitle">Additional information</h6>
+              <h1 className="modal__title">Additional information</h1>
               <div className="input-field">
                 <input
                   id="location"
@@ -303,7 +303,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
 
           {currentPart === 2 && (
             <>
-              <h6 className="dialogSubtitle">Application steps</h6>
+              <h1 className="modal__title">Application steps</h1>
               {formData.parts.map((part, index) => (
                 <div key={index} className="job-part">
                   <div className="input-field">
@@ -364,7 +364,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
             <div className="footer-buttons">
               {currentPart !== 0 && (
                 <button
-                  className="btn indigo lighten-2 left"
+                  className="btn indigo lighten-1 left"
                   onClick={(e) => {
                     e.preventDefault();
                     setCurrentPart((prevPart) => prevPart - 1);
@@ -378,7 +378,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
               )}
               {currentPart !== 2 && (
                 <button
-                  className="btn indigo lighten-2"
+                  className="btn indigo lighten-1"
                   disabled={getIsNextStepDisabled()}
                   onClick={(e) => {
                     e.preventDefault();
@@ -392,7 +392,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
                 </button>
               )}
               {currentPart === 2 && (
-                <button type="submit" className="btn indigo lighten-2">
+                <button type="submit" className="btn indigo lighten-1">
                   Create
                 </button>
               )}
