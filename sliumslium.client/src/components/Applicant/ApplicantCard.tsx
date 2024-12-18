@@ -77,7 +77,7 @@ export default function ApplicantCard({ applicant, offer }: ApplicantProps) {
   }, [error]);
 
   return (
-    <div>
+    <div tabIndex={1}>
       <div
         className="card applicant-card"
         style={{ paddingBottom: expanded ? "1rem" : 0 }}

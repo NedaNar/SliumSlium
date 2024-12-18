@@ -69,7 +69,7 @@ export default function JobOfferPart({
 
   return (
     <ul className="collapsible" id={`collapsible${part.id_Part?.toString()}`}>
-      <li>
+      <li tabIndex={1}>
         <div
           className={`collapsible-header ${
             applied && isCurrent
@@ -91,7 +91,6 @@ export default function JobOfferPart({
           )}
           {part.name}
         </div>
-
         <div className="collapsible-body">
           {!uploadedFile && <p>{part.description}</p>}
 
