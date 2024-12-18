@@ -69,7 +69,7 @@ export default function JobOfferPart({
 
   return (
     <ul className="collapsible" id={`collapsible${part.id_Part?.toString()}`}>
-      <li tabIndex={1}>
+      <li tabIndex={0}>
         <div
           className={`collapsible-header ${
             applied && isCurrent

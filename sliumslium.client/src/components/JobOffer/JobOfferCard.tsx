@@ -29,7 +29,7 @@ export default function JobOfferCard({
   }, []);
 
   return (
-    <div className="card job-offer-card" onClick={handleCardClick} tabIndex={1}>
+    <div className="card job-offer-card" onClick={handleCardClick} tabIndex={0}>
       <div
         className={`row ${
           isSmallScreen ? "" : "valign-wrapper"
