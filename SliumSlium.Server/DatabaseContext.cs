@@ -35,12 +35,13 @@ public class DatabaseContext : DbContext
             .HasOne(p => p.JobOffer)
             .WithMany(j => j.Parts)
             .HasForeignKey(p => p.Fk_JobOfferId_JobOffer);
+
         modelBuilder.Entity<UserJobOffer>()
             .HasKey(uj => uj.Id_UserJobOffer);
 
         modelBuilder.Entity<UserJobOffer>()
-            .HasOne(uj => uj.JobOffer) 
-            .WithMany()
+            .HasOne(uj => uj.JobOffer)
+            .WithMany(j => j.UserJobOffers)
             .HasForeignKey(uj => uj.Fk_JobOfferid_JobOffer);
 
         modelBuilder.Entity<UserJobOffer>()

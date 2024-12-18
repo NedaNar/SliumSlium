@@ -74,11 +74,6 @@ export default function JobOfferPage() {
               <p className="jobOfferPage_desc">{offer.description}</p>
               {user?.type !== 0 && userJobOffer === null && (
                 <>
-                  {isBefore(offer.validDate, new Date()) && (
-                    <p className="jobOfferPage_notValid">
-                      Offer no longer valid :(
-                    </p>
-                  )}
                   <button
                     className="btn-large indigo lighten-1 jobOfferPage__applyBtn"
                     disabled={isBefore(offer.validDate, new Date())}

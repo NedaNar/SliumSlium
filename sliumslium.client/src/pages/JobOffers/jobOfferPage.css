@@ -14,11 +14,6 @@
   margin: 0 2rem 0 0;
 }
 
-.jobOfferPage_notValid {
-  font-weight: bold;
-  color: purple;
-}
-
 .jobOfferPage__steps {
   margin: 4rem 0 0rem;
   font-size: 1.4rem;

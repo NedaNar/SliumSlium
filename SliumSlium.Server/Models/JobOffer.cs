@@ -19,5 +19,6 @@
         public User? User { get; set; }
 
         public ICollection<Part> Parts { get; set; } = new List<Part>();
+        public ICollection<UserJobOffer> UserJobOffers { get; set; } = new List<UserJobOffer>();
     }
 }

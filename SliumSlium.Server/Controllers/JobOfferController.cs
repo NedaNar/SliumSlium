@@ -244,6 +244,44 @@ namespace SliumSlium.Server.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteJobOffer(int id)
+        {
+            try
+            {
+                var jobOffer = await _context.JobOffer
+                    .Include(j => j.Parts)
+                    .Include(j => j.UserJobOffers)
+                    .FirstOrDefaultAsync(j => j.Id_JobOffer == id);
+
+                if (jobOffer == null)
+                {
+                    return NotFound(new { message = "Job offer not found." });
+                }
+
+                if (jobOffer.UserJobOffers != null && jobOffer.UserJobOffers.Any())
+                {
+                    _context.UserJobOffer.RemoveRange(jobOffer.UserJobOffers);
+                }
+
+                if (jobOffer.Parts != null && jobOffer.Parts.Any())
+                {
+                    _context.Part.RemoveRange(jobOffer.Parts);
+                }
+
+                _context.JobOffer.Remove(jobOffer);
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Job offer and related data deleted successfully." });
+            }
+            catch (Exception exception)
+            {
+                return StatusCode(500, new { error = exception.Message });
+            }
+        }
+
+
 
         /*[HttpGet("locations")]
         public async Task<ActionResult<IEnumerable<string>>> GetAllLocations()
