@@ -25,7 +25,7 @@ function App() {
               element={<OpenPositionPage />}
             />
             <Route path="/job-offer/:id" element={<JobOfferPage />} />
-            <Route path="/applicant/:id" element={<ApplicantPage />} />
+            <Route path="/user" element={<ApplicantPage />} />
             <Route
               path="/login"
               element={<PublicRoute element={<LoginPage />} />}

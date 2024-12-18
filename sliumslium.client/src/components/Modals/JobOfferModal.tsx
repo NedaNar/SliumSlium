@@ -179,7 +179,7 @@ function JobOfferModal({ isOpen, onClose, onCreate }: ModalProps) {
       <div className="modal-content">
         <div className="row">
           <div className="col">
-            <h5 className="dialogTitle">Create position</h5>
+            <h1 className="dialogTitle jobOfferModal__title">Create position</h1>
           </div>
           <button className="modal-close btn-flat right" onClick={closeDialog}>
             <i className="material-icons">close</i>

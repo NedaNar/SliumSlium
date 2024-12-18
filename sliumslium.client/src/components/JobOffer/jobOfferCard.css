@@ -68,10 +68,15 @@
   }
 
   .jobOfferCard__title {
-    font-size: 1.4rem;
+    font-size: 1.4rem !important;
+    margin: 0.5rem 0;
   }
 
   .jobOfferCard__salary {
     margin: 0 1.5rem 1rem 0;
+  }
+
+  .jobOfferCard__subtitle {
+    margin: 0;
   }
 }

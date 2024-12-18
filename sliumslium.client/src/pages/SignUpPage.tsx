@@ -27,7 +27,7 @@ export default function SignUpPage() {
   return (
     <div className="container center-align">
       <div className="card signUp__box">
-        <h4 className="center-align signUp__title">Sign in</h4>
+        <h1 className="center-align signUp__title">Sign in</h1>
         <div className="tab">
           <button
             className={`tab-link ${role === 1 ? "active" : ""}`}
@@ -95,7 +95,7 @@ export default function SignUpPage() {
           <strong>Already have an account?</strong>
         </p>
         <button
-          onClick={() => navigate("/signup")}
+          onClick={() => navigate("/login")}
           className="btn indigo lighten-1"
         >
           Log in

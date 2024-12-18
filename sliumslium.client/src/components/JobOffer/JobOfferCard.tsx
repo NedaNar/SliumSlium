@@ -58,7 +58,7 @@ export default function JobOfferCard({
                 </>
               )}
           </p>
-          <p className="card-subtitle">
+          <p className="card-subtitle jobOfferCard__subtitle">
             {user?.type === 0
               ? `Valid until ${format(new Date(offer.validDate), "yyyy-MM-dd")}`
               : offer.companyName}

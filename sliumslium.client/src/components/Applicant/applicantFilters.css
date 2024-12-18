@@ -16,3 +16,13 @@
 .appFilters__clear {
   margin: 0 0 0 0.5rem;
 }
+
+@media (max-width: 900px) {
+  .appFilters__status {
+    margin: 1rem 0;
+  }
+
+  .appFilters {
+    padding: 0.5rem 2% 0.5rem;
+  }
+}

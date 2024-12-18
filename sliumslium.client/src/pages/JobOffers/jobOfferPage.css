@@ -1,0 +1,38 @@
+.jobOfferPage__box {
+  margin-top: 2rem;
+}
+
+.jobOfferPage__job {
+  font-size: 2rem;
+}
+
+.jobOfferPage__insideBox {
+  padding: 0 !important;
+}
+
+.jobOfferPage__desc {
+  margin: 0 2rem 0 0;
+}
+
+.jobOfferPage_notValid {
+  font-weight: bold;
+  color: purple;
+}
+
+.jobOfferPage__steps {
+  margin: 4rem 0 0rem;
+  font-size: 1.4rem;
+}
+
+.jobOfferPage__applied {
+  margin: 1rem 0;
+}
+
+.jobOfferPage__parts {
+  margin: 2rem 0 0rem;
+}
+
+.jobOfferPage__offer {
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+}

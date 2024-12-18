@@ -48,6 +48,14 @@
   padding: 1rem 0;
 }
 
+.jobOfferModal__title {
+  font-size: 2rem;
+}
+
+.modal__required {
+  font-size: 1.8rem;
+}
+
 @media (max-width: 900px) {
   .large-modal {
     width: 100% !important ;

@@ -1,16 +1,22 @@
 import "./applicantPage.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import Pagination from "./HomePage/Pagination";
 import { JobOffer } from "../api/apiModel";
-import useFetch from "../api/useDataFetching";
-import { useParams } from "react-router";
+import useDelayedFetch from "../api/useDelayedDataFetching";
 
 export function ApplicantPage() {
-  const { id } = useParams();
-
   const { user } = useContext(UserContext);
-  const { data: offers } = useFetch<JobOffer[]>(`JobOffer/applicant/${id}`);
+
+  const { data: offers, fetchData } = useDelayedFetch<JobOffer[]>(
+    `JobOffer/applicant/${user?.id_User}`
+  );
+
+  useEffect(() => {
+    if (user?.id_User) {
+      fetchData();
+    }
+  }, [user]);
 
   return (
     <>

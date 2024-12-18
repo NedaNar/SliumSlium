@@ -34,7 +34,7 @@ export default function Header() {
           {user && (
             <li>
               <a
-                href={user.type === 1 ? `/applicant/${user.id_User}` : "/"}
+                href={user.type === 1 ? "/user" : "/"}
                 className="valign-wrapper"
               >
                 <i className="material-icons">account_circle</i>

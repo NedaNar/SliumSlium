@@ -18,7 +18,7 @@ export default function LoginPage() {
   return (
     <div className="container center-align">
       <div className="card login__box">
-        <h4 className="center-align">Log in</h4>
+        <h1 className="center-align login__title">Log in</h1>
         <div>
           <form onSubmit={handleSubmit}>
             <div className="input-field login__email">

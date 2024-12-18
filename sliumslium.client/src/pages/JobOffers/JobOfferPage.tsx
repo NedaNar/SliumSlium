@@ -14,6 +14,7 @@ import { LoginModal } from "../../components/Modals/LoginModal";
 import JobInformation from "../../components/JobOffer/JobInformation";
 import usePost from "../../api/useDataPosting";
 import { toastError } from "../../utils/toastUtils";
+import "./jobOfferPage.css";
 
 export default function JobOfferPage() {
   const { id } = useParams();
@@ -65,36 +66,39 @@ export default function JobOfferPage() {
     <>
       <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       {offer && (
-        <div className="container" style={{ marginTop: "2rem" }}>
+        <div className="container jobOfferPage__box">
           <div className="row">
-            <div className="col s12 m6 l7">
-              <h4>{offer.name}</h4>
+            <div className="col s12 m6 jobOfferPage__insideBox">
+              <h1 className="jobOfferPage__job">{offer.name}</h1>
               <p>{offer.companyName}</p>
-              <p style={{ margin: "0 2rem 0 0" }}>{offer.description}</p>
+              <p className="jobOfferPage_desc">{offer.description}</p>
               {user?.type !== 0 && userJobOffer === null && (
-                <button
-                  className="btn-large indigo lighten-1"
-                  style={{ margin: "2rem 0 0" }}
-                  disabled={isBefore(offer.validDate, new Date())}
-                  onClick={handleApplyClick}
-                >
-                  Apply
-                </button>
+                <>
+                  {isBefore(offer.validDate, new Date()) && (
+                    <p className="jobOfferPage_notValid">
+                      Offer no longer valid :(
+                    </p>
+                  )}
+                  <button
+                    className="btn-large indigo lighten-1 jobOfferPage__applyBtn"
+                    disabled={isBefore(offer.validDate, new Date())}
+                    onClick={handleApplyClick}
+                  >
+                    Apply
+                  </button>
+                </>
               )}
             </div>
 
-            <div className="col s12 m6 l5">
-              <div
-                className="card"
-                style={{ padding: "1rem 2rem", marginTop: "2rem" }}
-              >
+            <div className="col s12 m6 ">
+              <div className="card jobOfferPage__offer">
                 <JobInformation offer={offer} />
               </div>
             </div>
           </div>
 
           <div className="row">
-            <h5 style={{ margin: "4rem 0 0rem" }}>
+            <h2 className="jobOfferPage__steps">
               Application steps{" "}
               {userJobOffer && (
                 <StatusBadge
@@ -102,8 +106,8 @@ export default function JobOfferPage() {
                   showTooltip={true}
                 />
               )}
-            </h5>
-            <div style={{ margin: "1rem 0" }}>
+            </h2>
+            <div className="jobOfferPage__applied">
               {userJobOffer && (
                 <span>
                   Applied: {format(userJobOffer.applicationDate, "yyyy MM dd")}{" "}
@@ -116,7 +120,7 @@ export default function JobOfferPage() {
                   : `Valid until: ${format(offer.validDate, "yyyy MM dd")}`}
               </span>
             </div>
-            <div style={{ margin: "2rem 0 0rem" }}>
+            <div className="jobOfferPage__parts">
               {offer.parts &&
                 offer.parts.map((part, index) => {
                   return (

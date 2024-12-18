@@ -30,8 +30,8 @@ export default function OpenPositionPage() {
       {offer && (
         <div className="container openPosition__box">
           <div className="row">
-            <div className="col s12 m6 l7">
-              <h4>{offer.name}</h4>
+            <div className="col s12 m6 l7 openPosition__col">
+              <h1 className="openPosition__job">{offer.name}</h1>
               <p>{offer.companyName}</p>
               <p className="openPosition__desc">{offer.description}</p>
             </div>
@@ -44,9 +44,9 @@ export default function OpenPositionPage() {
           </div>
 
           <div className="row">
-            <h5 className="openPosition__appl">
+            <h2 className="openPosition__appl">
               Applicants ({applicants?.length})
-            </h5>
+            </h2>
             <ApplicantFilters
               offerId={Number(offerId)}
               onFilterChange={handleFilterChange}
@@ -56,7 +56,9 @@ export default function OpenPositionPage() {
                 <ApplicantCard key={index} applicant={appl} offer={offer} />
               ))}
             {(!applicants || applicants.length === 0) && (
-              <h5 className="center-align">No applicants found :(</h5>
+              <p className="center-align openPosition__noFound">
+                No applicants found
+              </p>
             )}
           </div>
         </div>

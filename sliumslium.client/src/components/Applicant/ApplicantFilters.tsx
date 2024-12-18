@@ -76,7 +76,7 @@ export default function ApplicantFilters({
   return (
     <div className="grey lighten-4 appFilters">
       <div>
-        <div className="valign-wrapper appFilters__box">
+        <div className="row appFilters__box">
           <div className="col s12 m4">
             <input
               type="text"

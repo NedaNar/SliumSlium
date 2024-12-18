@@ -33,5 +33,26 @@
 }
 
 .openPosition__appl {
+  font-size: 1.4rem;
   margin: 4rem 0 2rem;
+}
+
+.openPosition__col {
+  padding: 0 !important;
+}
+
+.openPosition__noFound {
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.openPosition__job {
+  font-size: 2rem;
+}
+
+@media (max-width: 900px) {
+  .openPosition__job {
+    font-size: 2rem;
+    margin: 0;
+  }
 }

@@ -29,7 +29,7 @@ export const LoginModal = ({ isOpen, onClose }: ModalProps) => {
         </button>
       </div>
       <div className="modal-content">
-        <h4>Login Required</h4>
+        <h1 className="modal__required">Login Required</h1>
         <p>You need to log in to apply for this job.</p>
         <button className="btn indigo" onClick={() => navigate("/login")}>
           Login
